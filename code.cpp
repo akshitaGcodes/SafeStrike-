@@ -35,30 +35,56 @@ struct Sector
 
 void assignCoordinates(Sector &s)
 {
-    if(s.name == "Sector C")
+    
+    if(s.name == "Sector M")
     {
         s.x = 0;
-        s.y = 0;
-    }
-    else if(s.name == "Sector N1")
-    {
-        s.x = 0;
-        s.y = 1;
-    }
-    else if(s.name == "Sector S1")
-    {
-        s.x = 0;
-        s.y = -1;
-    }
-    else if(s.name == "Sector E1")
-    {
-        s.x = 1;
         s.y = 0;
     }
     else if(s.name == "Sector W1")
     {
         s.x = -1;
         s.y = 0;
+    }
+    else if(s.name == "Sector E1")
+    {
+        s.x = 1;
+        s.y = 0;
+    }
+    else if(s.name == "Sector C")
+    {
+        s.x = 0;
+        s.y = 1;
+    }
+    else if(s.name == "Alt Route S")
+    {
+        s.x = -1;
+        s.y = 0;
+    }
+    else if(s.name == "SW")
+    {
+        s.x = -1;
+        s.y = -1;
+    }
+    else if(s.name == "SE")
+    {
+        s.x = 1;
+        s.y = -1;
+    }
+    else if(s.name == "NW")
+    {
+        s.x = -1;
+        s.y = 1;
+    }
+    else if(s.name == "NE")
+    {
+        s.x = 1;
+        s.y = 1;
+    }
+    else if(s.name == "N1")
+    {
+        s.x = 0;
+        s.y = 2;
     }
     else if(s.name == "Loading Bay")
     {
