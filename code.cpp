@@ -72,6 +72,43 @@ void assignCoordinates(Sector &s)
         s.y = 99;
     }
 }
+struct GasData
+{
+    int NO2;
+    int SO2;
+    int AQI;
+};
+
+GasData generateMockGasData()
+{
+    GasData data;
+    data.NO2 = rand() % 200 + 20;
+    data.SO2 = rand() % 200 + 20;
+    data.AQI = (data.NO2 + data.SO2) / 2;
+    return data;
+}
+
+int getSectorAQI(int sectorId)
+{
+    GasData data = generateMockGasData();
+
+    cout << "\nSector " << sectorId << " Air Quality Data";
+    cout << "\nNO2: " << data.NO2;
+    cout << "\nSO2: " << data.SO2;
+    cout << "\nAQI: " << data.AQI << endl;
+
+    return data.AQI;
+}
+
+void checkGasSafety(int aqi)
+{
+    if (aqi <= 100)
+        cout << "Status: SAFE" << endl;
+    else if (aqi <= 150)
+        cout << "Status: MODERATE" << endl;
+    else
+        cout << "Status: HAZARDOUS" << endl;
+}
 
 int main() 
 {
@@ -138,43 +175,5 @@ int main()
     }
 
     return 0;
-}
-
-struct GasData
-{
-    int NO2;
-    int SO2;
-    int AQI;
-};
-
-GasData generateMockGasData()
-{
-    GasData data;
-    data.NO2 = rand() % 200 + 20;
-    data.SO2 = rand() % 200 + 20;
-    data.AQI = (data.NO2 + data.SO2) / 2;
-    return data;
-}
-
-int getSectorAQI(int sectorId)
-{
-    GasData data = generateMockGasData();
-
-    cout << "\nSector " << sectorId << " Air Quality Data";
-    cout << "\nNO2: " << data.NO2;
-    cout << "\nSO2: " << data.SO2;
-    cout << "\nAQI: " << data.AQI << endl;
-
-    return data.AQI;
-}
-
-void checkGasSafety(int aqi)
-{
-    if (aqi <= 100)
-        cout << "Status: SAFE" << endl;
-    else if (aqi <= 150)
-        cout << "Status: MODERATE" << endl;
-    else
-        cout << "Status: HAZARDOUS" << endl;
 }
 
