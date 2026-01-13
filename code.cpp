@@ -55,7 +55,7 @@ GasData generateMockGasData()
 }
 
 // aqi display 
-int getSectorAQI(int sectorId , string sectorIdCopy)
+int getSectorAQI(string sectorIdCopy)
 {
     GasData data = generateMockGasData();
 
@@ -144,15 +144,18 @@ void assignCoordinates(Sector &s)
         s.y = 99;
     }
 }
+
 // Structure to store engine parameters
-struct EngineData {
+struct EngineData 
+{
     int temperature;     // in °C
     int vibration;       // vibration level (0–100)
     int rpm;             // engine speed
 };
 
-// 1️⃣ Simulates engine parameters
-EngineData generateEngineHealthData() {
+
+EngineData generateEngineHealthData()
+ {
     EngineData data;
     data.temperature = 60 + rand() % 50;   // 60–109 °C
     data.vibration   = rand() % 100;       // 0–99
@@ -160,29 +163,34 @@ EngineData generateEngineHealthData() {
     return data;
 }
 
-// 2️⃣ Detects early signs of engine failure
-bool checkEngineHealth(EngineData data) {
-    if (data.temperature > 95 || data.vibration > 70 || data.rpm > 2800) {
+bool checkEngineHealth(EngineData data) 
+{
+    if (data.temperature > 95 || data.vibration > 70 || data.rpm > 2800) 
+    {
         return false;  // unhealthy
     }
     return true;       // healthy
 }
 
-// 3️⃣ Suggests maintenance before breakdown
-void predictMaintenance(EngineData data) {
+void predictMaintenance(EngineData data) 
+{
     cout << "\n--- Predictive Maintenance Report ---\n";
     cout << "Temperature: " << data.temperature << " °C\n";
     cout << "Vibration: " << data.vibration << "\n";
     cout << "RPM: " << data.rpm << "\n";
 
-    if (!checkEngineHealth(data)) {
+    if (!checkEngineHealth(data))
+     {
         cout << "⚠ WARNING: Engine health degrading\n";
         cout << "🔧 Recommendation: Schedule maintenance immediately\n";
-    } else {
+    } 
+    else
+     {
         cout << "✅ Engine status normal\n";
         cout << "🟢 No maintenance required at the moment\n";
     }
 }
+
 
 int main() 
 {
@@ -233,32 +241,30 @@ int main()
 
             srand(time(0));
 
-            int sectorId; 
             string sectorIdCopy;
             cout << "\nEnter Sector ID to check air quality: ";
             cin >> sectorIdCopy;
 
-            //sectorId =
-
-            int aqi = getSectorAQI(sectorId ,sectorIdCopy); // error 
+            int aqi = getSectorAQI(sectorIdCopy); // error 
             checkGasSafety(aqi);
            
         } 
+
         else if(role == "Moderator") 
         {
-            //partial access 
+           srand(time(0)); // seed random values
+
+            cout << "===== SafeStrike Engine Monitoring System =====\n";
+
+            EngineData engine = generateEngineHealthData();
+            predictMaintenance(engine);
         }
+
          else if(role == "Worker") 
          {
             //limited access 
         } 
 
     }
-    srand(time(0)); // seed random values
-
-    cout << "===== SafeStrike Engine Monitoring System =====\n";
-
-    EngineData engine = generateEngineHealthData();
-    predictMaintenance(engine);
     return 0;
 }
