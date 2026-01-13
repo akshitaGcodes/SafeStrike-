@@ -3,9 +3,10 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+
 using namespace std;
 
-// username locking 
+ 
 class User 
 {
     private:
@@ -28,15 +29,13 @@ class User
         }
 };
 
-// sector declaration  - > coordinate + name 
 struct Sector
 {
     string name; 
     int x;
     int y;
 };
-
-//levels 
+ 
 struct GasData
 {
     int NO2;
@@ -44,7 +43,6 @@ struct GasData
     int AQI;
 };
 
-//random generator 
 GasData generateMockGasData()
 {
     GasData data;
@@ -54,12 +52,11 @@ GasData generateMockGasData()
     return data;
 }
 
-// aqi display 
 int getSectorAQI(string sectorIdCopy)
 {
     GasData data = generateMockGasData();
 
-    cout << "\nSector " << sectorIdCopy << " Air Quality Data";// error 
+    cout << "\nSector " << sectorIdCopy << " Air Quality Data";
     cout << "\nNO2: " << data.NO2;
     cout << "\nSO2: " << data.SO2;
     cout << "\nAQI: " << data.AQI << endl;
@@ -67,7 +64,6 @@ int getSectorAQI(string sectorIdCopy)
     return data.AQI;
 }
 
-// normal correct
 void checkGasSafety(int aqi)
 {
     if (aqi <= 100)
@@ -78,31 +74,30 @@ void checkGasSafety(int aqi)
         cout << "Status: HAZARDOUS" << endl;
 }
 
-// using struct as paramaeter 
 void assignCoordinates(Sector &s)
 {
     
-    if(s.name == "Sector M")
+    if(s.name == "Sector_M")
     {
         s.x = 0;
         s.y = 0;
     }
-    else if(s.name == "Sector W1")
+    else if(s.name == "Sector_W1")
     {
         s.x = -1;
         s.y = 0;
     }
-    else if(s.name == "Sector E1")
+    else if(s.name == "Sector_E1")
     {
         s.x = 1;
         s.y = 0;
     }
-    else if(s.name == "Sector C")
+    else if(s.name == "Sector_C")
     {
         s.x = 0;
         s.y = 1;
     }
-    else if(s.name == "Alt Route S")
+    else if(s.name == "Alt_Route_S")
     {
         s.x = -1;
         s.y = 0;
@@ -132,7 +127,7 @@ void assignCoordinates(Sector &s)
         s.x = 0;
         s.y = 2;
     }
-    else if(s.name == "Loading Bay")
+    else if(s.name == "Loading_Bay") 
     {
         s.x = 0;
         s.y = -2;
@@ -145,20 +140,19 @@ void assignCoordinates(Sector &s)
     }
 }
 
-// Structure to store engine parameters
 struct EngineData 
 {
-    int temperature;     // in °C
-    int vibration;       // vibration level (0–100)
-    int rpm;             // engine speed
+    int temperature;     
+    int vibration;       
+    int rpm;             
 };
 
 
 EngineData generateEngineHealthData()
  {
     EngineData data;
-    data.temperature = 60 + rand() % 50;   // 60–109 °C
-    data.vibration   = rand() % 100;       // 0–99
+    data.temperature = 60 + rand() % 50;    // 60–109 °C
+    data.vibration   = rand() % 100;        // 0–99
     data.rpm         = 800 + rand() % 2200; // 800–2999 RPM
     return data;
 }
@@ -194,7 +188,6 @@ void predictMaintenance(EngineData data)
 
 int main() 
 {
-
     User userDatabase[] = {
         User("Akshita_G", "AG.007", "Admin"),
         User("Deepanshi_G", "DG.99", "Moderator"),
@@ -237,32 +230,83 @@ int main()
 
         if(role == "Admin") 
         {
-            //full access 
+            int choice ; 
+            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System";
+            cin>> choice;
 
-            srand(time(0));
+            if(choice == 1)
+            {
+                srand(time(0));
+                string sectorIdCopy;
+                cout << "\nEnter Sector ID to check air quality: ";
+                cin >> sectorIdCopy;
+                int aqi = getSectorAQI(sectorIdCopy); 
+                checkGasSafety(aqi);
+            }
+            else if (choice ==2 )
+            {
+                srand(time(0)); 
 
-            string sectorIdCopy;
-            cout << "\nEnter Sector ID to check air quality: ";
-            cin >> sectorIdCopy;
+                cout << "===== SafeStrike Engine Monitoring System =====\n";
 
-            int aqi = getSectorAQI(sectorIdCopy); // error 
-            checkGasSafety(aqi);
-           
+                EngineData engine = generateEngineHealthData();
+                predictMaintenance(engine);
+            }
+            else
+            {
+                cout<<"Error......";
+            }
+
         } 
 
         else if(role == "Moderator") 
         {
-           srand(time(0)); // seed random values
+            int choice ; 
+            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System";
+            cin>> choice;
+            if(choice == 1)
+            {
+                srand(time(0));
+                string sectorIdCopy;
+                cout << "\nEnter Sector ID to check air quality: ";
+                cin >> sectorIdCopy;
+                int aqi = getSectorAQI(sectorIdCopy); 
+                checkGasSafety(aqi);
+            }
+            else if (choice ==2 )
+            {
+                srand(time(0)); 
 
-            cout << "===== SafeStrike Engine Monitoring System =====\n";
+                cout << "===== SafeStrike Engine Monitoring System =====\n";
 
-            EngineData engine = generateEngineHealthData();
-            predictMaintenance(engine);
+                EngineData engine = generateEngineHealthData();
+                predictMaintenance(engine);
+            }
+            else
+            {
+                cout<<"Error......";
+            }
+           
         }
 
          else if(role == "Worker") 
-         {
-            //limited access 
+        {
+            int choice ; 
+            cout<<"Choose your operation :-"<<endl<<"1.Engine Monitoring System";
+            cin>> choice;
+            if(choice == 1)
+            {
+                srand(time(0)); 
+
+                cout << "===== SafeStrike Engine Monitoring System =====\n";
+
+                EngineData engine = generateEngineHealthData();
+                predictMaintenance(engine);
+            }
+            else
+            {
+                cout<<"Error......";
+            }
         } 
 
     }
