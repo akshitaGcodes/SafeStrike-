@@ -1,1 +1,18 @@
+====================== SAFE STRIKE : BASE MINE MAP ======================
+
+                          [ Sector N1 ]
+                               |
+                               |
+        [ Sector NW ] -------- [ Sector C ] -------- [ Sector NE ]
+                               |
+                               |
+        [ Sector W1 ] -------- [ Sector M ] -------- [ Sector E1 ]
+                               |
+                               |
+        [ Sector SW ] -------- [ Alt Route S ] ------ [ Sector SE ]
+                               |
+                               |
+                         [ Loading Bay ]
+
+=======================================================================
 
