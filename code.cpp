@@ -23,6 +23,53 @@ class User
             return (u == username && p == password);
         }
 };
+struct Sector
+{
+    string name;
+    int x;
+    int y;
+};
+void assignCoordinates(Sector &s)
+{
+    if(s.name == "Sector C")
+    {
+        s.x = 0;
+        s.y = 0;
+    }
+    else if(s.name == "Sector N1")
+    {
+        s.x = 0;
+        s.y = 1;
+    }
+    else if(s.name == "Sector S1")
+    {
+        s.x = 0;
+        s.y = -1;
+    }
+    else if(s.name == "Sector E1")
+    {
+        s.x = 1;
+        s.y = 0;
+    }
+    else if(s.name == "Sector W1")
+    {
+        s.x = -1;
+        s.y = 0;
+    }
+    else if(s.name == "Loading Bay")
+    {
+        s.x = 0;
+        s.y = -2;
+    }
+    else
+    {
+        
+        s.x = 99;
+        s.y = 99;
+    }
+}
+
+
 
 int main() 
 {
