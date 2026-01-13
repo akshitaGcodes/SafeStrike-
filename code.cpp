@@ -1,9 +1,11 @@
 #include <iostream>
 #include <cstring>
+#include <string>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
 
+// username locking 
 class User 
 {
     private:
@@ -26,13 +28,57 @@ class User
         }
 };
 
+// sector declaration  - > coordinate + name 
 struct Sector
 {
-    string name;
+    string name; 
     int x;
     int y;
 };
 
+//levels 
+struct GasData
+{
+    int NO2;
+    int SO2;
+    int AQI;
+};
+
+//random generator 
+GasData generateMockGasData()
+{
+    GasData data;
+    data.NO2 = rand() % 200 + 20;
+    data.SO2 = rand() % 200 + 20;
+    data.AQI = (data.NO2 + data.SO2) / 2;
+    return data;
+}
+
+// aqi display 
+int getSectorAQI(int sectorId , string sectorIdCopy)
+{
+    GasData data = generateMockGasData();
+
+    cout << "\nSector " << sectorIdCopy << " Air Quality Data";// error 
+    cout << "\nNO2: " << data.NO2;
+    cout << "\nSO2: " << data.SO2;
+    cout << "\nAQI: " << data.AQI << endl;
+
+    return data.AQI;
+}
+
+// normal correct
+void checkGasSafety(int aqi)
+{
+    if (aqi <= 100)
+        cout << "Status: SAFE" << endl;
+    else if (aqi <= 150)
+        cout << "Status: MODERATE" << endl;
+    else
+        cout << "Status: HAZARDOUS" << endl;
+}
+
+// using struct as paramaeter 
 void assignCoordinates(Sector &s)
 {
     
@@ -98,43 +144,6 @@ void assignCoordinates(Sector &s)
         s.y = 99;
     }
 }
-struct GasData
-{
-    int NO2;
-    int SO2;
-    int AQI;
-};
-
-GasData generateMockGasData()
-{
-    GasData data;
-    data.NO2 = rand() % 200 + 20;
-    data.SO2 = rand() % 200 + 20;
-    data.AQI = (data.NO2 + data.SO2) / 2;
-    return data;
-}
-
-int getSectorAQI(int sectorId)
-{
-    GasData data = generateMockGasData();
-
-    cout << "\nSector " << sectorId << " Air Quality Data";
-    cout << "\nNO2: " << data.NO2;
-    cout << "\nSO2: " << data.SO2;
-    cout << "\nAQI: " << data.AQI << endl;
-
-    return data.AQI;
-}
-
-void checkGasSafety(int aqi)
-{
-    if (aqi <= 100)
-        cout << "Status: SAFE" << endl;
-    else if (aqi <= 150)
-        cout << "Status: MODERATE" << endl;
-    else
-        cout << "Status: HAZARDOUS" << endl;
-}
 
 int main() 
 {
@@ -160,8 +169,10 @@ int main()
     bool accessGranted = false;
     string role;
 
-    for(int i = 0; i < total_users; i++) {
-        if(userDatabase[i].checkCredentials(user_name, password)) {
+    for(int i = 0; i < total_users; i++) 
+    {
+        if(userDatabase[i].checkCredentials(user_name, password)) 
+        {
             accessGranted = true;
             role = userDatabase[i].role;
             break;
@@ -179,15 +190,20 @@ int main()
 
         if(role == "Admin") 
         {
+            //full access 
+
             srand(time(0));
 
-            int sectorId;
+            int sectorId; 
+            string sectorIdCopy;
             cout << "\nEnter Sector ID to check air quality: ";
-            cin >> sectorId;
+            cin >> sectorIdCopy;
 
-            int aqi = getSectorAQI(sectorId);
+            //sectorId =
+
+            int aqi = getSectorAQI(sectorId ,sectorIdCopy); // error 
             checkGasSafety(aqi);
-            //full access 
+           
         } 
         else if(role == "Moderator") 
         {
@@ -199,7 +215,5 @@ int main()
         } 
 
     }
-
     return 0;
 }
-
