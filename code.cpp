@@ -2,60 +2,83 @@
 #include <cstring>
 using namespace std;
 
-int passwordChecker(char name[50] , char password[50])
+class User 
 {
-    const char* userDatabase[6][2] = {
-                                        {"Akshita_G", "AG.007"},
-                                        {"Deepanshi_G", "DG.99"},
-                                        {"Adhya_J", "AJ.27"},
-                                        {"Akshita_D", "AD2024"},
-                                        {"Priyan_S", "PS.n404"},
-                                        {"123", "123"} // TESTER 
-                                    };
-    
+    private:
+    string password;
+
+    public:
+        string username;
+        string role;
+
+        User(string u, string p, string r)
+        {
+            username = u;
+            password = p;
+            role = r;
+        }
+
+        bool checkCredentials(string u, string p) 
+        {
+            return (u == username && p == password);
+        }
+};
+
+int main() 
+{
+
+    User userDatabase[] = {
+        User("Akshita_G", "AG.007", "Admin"),
+        User("Deepanshi_G", "DG.99", "Moderator"),
+        User("Adhya_J", "AJ.27", "Moderator"),
+        User("Akshita_D", "AD2024", "Moderator"),
+        User("Priyan_S", "PS.n404", "Admin"),
+        User("123", "123", "Worker")
+    };
     int total_users = 6;
 
-    for(int i = 0; i < total_users; i++) 
-    {
-        if(strcmp(name, userDatabase[i][0]) == 0) 
-        {
-            if (strcmp(password, userDatabase[i][1]) == 0) 
-            {
-                return 1; 
-            } 
-            else 
-            {
-                return 0; 
-            }
+    string user_name, password;
+    cout << "Welcome to SafeStrike" << endl;
+    cout << "Please enter your login credentials." << endl;
+    cout << "UserName : ";
+    cin >> user_name;
+    cout << "Password : ";
+    cin >> password;
+
+    bool accessGranted = false;
+    string role;
+
+    for(int i = 0; i < total_users; i++) {
+        if(userDatabase[i].checkCredentials(user_name, password)) {
+            accessGranted = true;
+            role = userDatabase[i].role;
+            break;
         }
     }
-    return 0;
-} 
-int main()
-{
-    char user_name[100];
-    char password[100];
-    cout<<"Welcome to SafeStrike"<<endl;
 
-    cout<<"Please enter your login credentials."<<endl;
-    cout<<"UserName : ";
-    cin>>user_name;
-    cout<<"Password : ";
-    cin>>password;
-    if(!(passwordChecker(user_name,password)))
+    if(!accessGranted) 
     {
-        cout<<"Invalid Credentials !!. Please try again"<<endl;
-    }
-    else
+        cout << "Invalid Credentials !!. Please try again" << endl;
+    } 
+    else 
     {
         cout << "\nAccess Granted!" << endl;
-        cout << "Welcome " << user_name << " to the SafeStrike Dashboard!!" << endl;
+        cout << "Welcome " << user_name << " (" << role << ") to the SafeStrike Dashboard!!" << endl;
+
+        if(role == "Admin") 
+        {
+            //full access 
+        } 
+        else if(role == "Moderator") 
+        {
+            //partial access 
+        }
+         else if(role == "Worker") 
+         {
+            ////limited access 
+        } 
 
     }
-
 
     return 0;
 }
-
-
-
