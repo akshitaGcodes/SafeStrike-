@@ -31,7 +31,7 @@ int main()
         User("Akshita_G", "AG.007", "Admin"),
         User("Deepanshi_G", "DG.99", "Moderator"),
         User("Adhya_J", "AJ.27", "Moderator"),
-        User("Akshita_D", "AD2024", "Moderator"),
+        User("Akshita_D", "AD.2024", "Moderator"),
         User("Priyan_S", "PS.n404", "Admin"),
         User("123", "123", "Worker")
     };
