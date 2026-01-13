@@ -23,12 +23,14 @@ class User
             return (u == username && p == password);
         }
 };
+
 struct Sector
 {
     string name;
     int x;
     int y;
 };
+
 void assignCoordinates(Sector &s)
 {
     if(s.name == "Sector C")
@@ -68,8 +70,6 @@ void assignCoordinates(Sector &s)
         s.y = 99;
     }
 }
-
-
 
 int main() 
 {
@@ -122,7 +122,7 @@ int main()
         }
          else if(role == "Worker") 
          {
-            ////limited access 
+            //limited access 
         } 
 
     }
