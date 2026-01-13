@@ -231,7 +231,7 @@ int main()
         if(role == "Admin") 
         {
             int choice ; 
-            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System";
+            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System"<<endl;
             cin>> choice;
 
             if(choice == 1)
@@ -262,7 +262,7 @@ int main()
         else if(role == "Moderator") 
         {
             int choice ; 
-            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System";
+            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System"<<endl;
             cin>> choice;
             if(choice == 1)
             {
@@ -292,7 +292,7 @@ int main()
          else if(role == "Worker") 
         {
             int choice ; 
-            cout<<"Choose your operation :-"<<endl<<"1.Engine Monitoring System";
+            cout<<"Choose your operation :-"<<endl<<"1.Engine Monitoring System"<<endl;
             cin>> choice;
             if(choice == 1)
             {
