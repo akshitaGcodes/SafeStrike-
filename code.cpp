@@ -4,23 +4,33 @@ using namespace std;
 
 int passwordChecker(char name[50] , char password[50])
 {
-    if(strcmp(name, "ak") == 0)
-    {
-        if (strcmp(password, "ak") == 0)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-    else
-    {
-        return 0;
-    }
+    const char* userDatabase[6][2] = {
+                                        {"Akshita_G", "AG.007"},
+                                        {"Deepanshi_G", "DG.99"},
+                                        {"Adhya_J", "AJ.27"},
+                                        {"Akshita_D", "AD2024"},
+                                        {"Priyan_S", "PS.n404"},
+                                        {"123", "123"} // TESTER 
+                                    };
     
-}
+    int total_users = 6;
+
+    for(int i = 0; i < total_users; i++) 
+    {
+        if(strcmp(name, userDatabase[i][0]) == 0) 
+        {
+            if (strcmp(password, userDatabase[i][1]) == 0) 
+            {
+                return 1; 
+            } 
+            else 
+            {
+                return 0; 
+            }
+        }
+    }
+    return 0;
+} 
 int main()
 {
     char user_name[100];
