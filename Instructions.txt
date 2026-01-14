@@ -1,1 +1,43 @@
+🛠 SafeStrike Dashboard: User Manual
+Welcome to the SafeStrike Mine Management System. This platform ensures operational safety through real-time monitoring and predictive analytics.
+
+1. Getting Started (Login)
+To access the system, run the program and enter a valid username and password. Access levels are divided into three roles:
+
+Admin: Full access to all features, including ESG Sustainability reports.
+
+Moderator: Access to monitoring, maps, and route optimization.
+
+Worker: Access to core safety features (AQI, Engine health, and Maps).
+
+Guest Credentials for Testing:
+Username: 123 | Password: 123 (Role: Worker)
+Username: Akshita_G | Password: AG.007 (Role: Admin)
+
+1. Check Air Quality
+Enter a sector name (e.g., Sector W1).
+The system generates mock sensor data for No2 and S02 
+
+2. Engine Monitoring System
+Analyzes vehicle/machinery health based on Temperature, Vibration, and RPM.
+If any parameter exceeds safety limits (e.g., Temp > 95°C), the system will issue a Maintenance Warning
+
+3. Sector Information & Mine Map
+Sector Info: Provides coordinates and identifies the resource located there (Coal, Iron Ore, or Diamond).
+Show Mine Map: Displays an ASCII layout of the mine to help you visualize the connection between sectors.
+
+4. Distance Calculation
+Enter two different sectors.
+The system calculates the "Manhattan Distance" (grid-based movement) between them to help with logistics planning.
+
+5. Find Green Route (Admin/Moderator Only)
+Enter your current location.
+The system scans all possible paths to the "Loading Bay" and selects the one with the lowest overall AQI to ensure worker safety.
+
+6. ESG Score Report (Admin Only)
+Generates a Sustainability Report based on environmental data (AQI), social safety (Engine health), and governance (User roles).
+
+7.Exit and Security
+Select the Logout & Exit option (Option 6, 7, or 8 depending on your role) to safely close your session.
+Always ensure you logout if you are using a shared terminal in the mine.
 
