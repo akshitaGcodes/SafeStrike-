@@ -218,6 +218,38 @@ void reportSector(Sector s) {
                   else if(s.Id == 0) cout << " is Admin Office.\n";
                    else if(s.Id == 4) cout << " is Loading Bay.\n";
 }
+int calculateDistance(Sector a, Sector b)
+{
+    
+    return abs(a.x - b.x) + abs(a.y - b.y);
+}
+Sector findGreenRoute(Sector current, Sector route1, Sector route2)
+{
+    
+    if(route1.aqi > 200)
+        return route2;
+
+    if(route2.aqi > 200)
+        return route1;
+
+    
+    int d1 = calculateDistance(current, route1);
+    int d2 = calculateDistance(current, route2);
+
+    if(d1 <= d2)
+        return route1;
+    else
+        return route2;
+}
+Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute)
+{
+    if(mainRoute.aqi > 200)
+    {
+        return alternativeRoute;
+    }
+    return mainRoute;
+}
+
 
 
 int main() 
@@ -278,11 +310,11 @@ int main()
             if(choice == 1)
             {
                 srand(time(0));
-                string sectorIdCopy;
-                cout << "\nEnter Sector ID to check air quality: ";
+                string sectornameCopy;
+                cout << "\nEnter Sector Name to check air quality: ";
                 cin.ignore(1000, '\n'); 
-                getline(cin, sectorIdCopy);
-                int aqi = getSectorAQI(sectorIdCopy); 
+                getline(cin, sectornameCopy);
+                int aqi = getSectorAQI(sectornameCopy); 
                 checkGasSafety(aqi);
             }
             else if (choice ==2 )
@@ -313,11 +345,11 @@ int main()
             if(choice == 1)
             {
                 srand(time(0));
-                string sectorIdCopy;
-                cout << "\nEnter Sector ID to check air quality: ";
+                string sectornameCopy;
+                cout << "\nEnter Sector Name to check air quality: ";
                 cin.ignore(1000, '\n'); 
-                getline(cin, sectorIdCopy);
-                int aqi = getSectorAQI(sectorIdCopy); 
+                getline(cin, sectornameCopy);
+                int aqi = getSectorAQI(sectornameCopy); 
                 checkGasSafety(aqi);
             }
             else if (choice ==2 )
