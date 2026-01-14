@@ -7,6 +7,14 @@
 
 using namespace std;
 
+const string b_red     = "\033[1;31m";
+const string b_green   = "\033[1;32m";
+const string b_white   = "\033[1;37m";
+const string b_yellow  = "\033[1;33m";
+const string b_blue    = "\033[1;34m";
+
+const string reset      = "\033[0m";
+
  
 class User 
 {
@@ -82,7 +90,7 @@ int getSectorAQI(string sectorIdCopy)
 {
     GasData data = generateMockGasData();
 
-    cout << "\nSector " << sectorIdCopy << " Air Quality Data";
+    cout << "\n" << sectorIdCopy <<b_white<< "Air Quality Data" <<reset<<endl;
     cout << "\nNO2: " << data.NO2;
     cout << "\nSO2: " << data.SO2;
     cout << "\nAQI: " << data.AQI << endl;
@@ -93,11 +101,11 @@ int getSectorAQI(string sectorIdCopy)
 void checkGasSafety(int aqi)
 {
     if (aqi <= 100)
-        cout << "Status: SAFE" << endl;
+        cout <<b_white<< "Status:"<<reset<< b_green  <<"SAFE" << reset<< endl<<endl;
     else if (aqi <= 150)
-        cout << "Status: MODERATE" << endl;
+        cout <<b_white<< "Status:"<<reset<< b_yellow  <<"MODERATE" << reset<< endl<<endl;
     else
-        cout << "Status: HAZARDOUS" << endl;
+        cout <<b_white<< "Status:"<<reset<< b_red  <<"HAZARDOUS" << reset<< endl<<endl;
 }
 
 void assignCoordinates(Sector &s)
@@ -271,13 +279,13 @@ void predictMaintenance(EngineData data)
 
     if (!checkEngineHealth(data))
      {
-        cout << "⚠ WARNING: Engine health degrading\n";
-        cout << "🔧 Recommendation: Schedule maintenance immediately\n";
+        cout <<b_red<< "⚠ WARNING: Engine health degrading"<<reset<<endl<<endl;
+        cout << "🔧 Recommendation: Schedule maintenance immediately\n\n";
     } 
     else
      {
-        cout << "✅ Engine status normal\n";
-        cout << "🟢 No maintenance required at the moment\n";
+        cout <<b_green<< "✅ Engine status normal"<<reset<<endl<<endl;
+        cout << "🟢 No maintenance required at the moment\n\n";
     }
 }
 
@@ -370,18 +378,18 @@ ESGScore generateESGScore(int aqi, EngineData engine, string role)
 
 void displayESGScore(ESGScore score)
 {
-    cout << "\n--- ESG SCORE REPORT ---\n";
+    cout << "\n------ ESG SCORE REPORT ------\n";
     cout << "Environmental Score: " << score.environmental << endl;
     cout << "Social Score: " << score.social << endl;
     cout << "Governance Score: " << score.governance << endl;
     cout << "Overall ESG Score: " << score.total << endl;
 
     if(score.total >= 80)
-        cout << "Status: Excellent Sustainability\n";
+        cout << "Status:"<<b_green <<"Excellent Sustainability\n"<<reset<< endl;
     else if(score.total >= 60)
-        cout << "Status: Moderate Sustainability\n";
+        cout << "Status: "<<b_yellow <<"Moderate Sustainability\n"<<reset<< endl;
     else
-        cout << "Status: High Risk -> Needs Improvement\n";
+        cout << "Status:"<< b_red<<"High Risk -> Needs Improvement\n"<<reset<< endl;
 }
 
 int main() 
@@ -407,7 +415,7 @@ int main()
     Sector s2;
 
     string user_name, password;
-    cout << "Welcome to SafeStrike" << endl;
+    cout << b_white << "----------------Welcome to SafeStrike----------------" << reset << endl;
     cout << "Please enter your login credentials." << endl;
     cout << "UserName : ";
     cin >> user_name;
@@ -429,12 +437,12 @@ int main()
 
     if(!accessGranted) 
     {
-        cout << "Invalid Credentials !!. Please try again" << endl;
+        cout << b_red << "Invalid Credentials !!. Please try again" << reset << endl;
     } 
     else 
     {
-        cout << "\nAccess Granted!" << endl;
-        cout << "Welcome " << user_name << " (" << role << ") to the SafeStrike Dashboard!!" << endl;
+        cout << b_green  << "\nAccess Granted!" << reset << endl;
+        cout << "Welcome " <<b_white << user_name << "(" << role << ")"<<reset<< "to the SafeStrike Dashboard!!" << endl;
 
         if(role == "Admin") 
         {
@@ -449,7 +457,7 @@ int main()
                 cout << "4. Show Mine Map" <<endl;
                 cout << "5. Distance between two Sectors"<<endl;
                 cout << "6.Display ESG Score"<<endl;
-                cout<< "7. Find Green Route"<<endl;
+                cout <<  " 7. Find Green Route"<<endl;
                 cout << "8. Exit"<<endl;
 
                 cin >> choice;
@@ -564,11 +572,18 @@ int main()
 
                 else if (choice == 6)
                 {
+                    string sectorQ;
+
+                    cin.ignore(1000, '\n');
+                    cout << "Enter your Sector: ";
+                    getline(cin, sectorQ); 
+
                     EngineData engine = generateEngineHealthData();
-                    int aqi = getSectorAQI("Sector M");
-                    ESGScore score = generateESGScore(aqi,engine,role); // TO DO
+                    int aqi = getSectorAQI(sectorQ);
+                    ESGScore score = generateESGScore(aqi,engine,role); 
                     displayESGScore(score); 
                 }
+
                 else if (choice == 7)
                 {
                     cin.ignore(1000, '\n');
