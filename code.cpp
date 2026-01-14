@@ -103,7 +103,7 @@ void assignTask(Task &task, WorkerStatus &worker)
         task.assignedWorker = worker.workerName;
         worker.hoursWorked += task.requiredHours;
 
-        cout << "\n✅ Task Assigned Successfully\n";
+        cout << b_green<<"\n✅ Task Assigned Successfully\n"<<reset<<endl;
         cout << "Task: " << task.description << endl;
         cout << "Assigned To: " << worker.workerName << endl;
         cout << "Total Hours Worked: " 
@@ -111,7 +111,7 @@ void assignTask(Task &task, WorkerStatus &worker)
     }
     else
     {
-        cout << "\n⚠ Cannot Assign Task\n";
+        cout <<b_red<< "\n⚠ Cannot Assign Task\n"<<reset<<endl;
         cout << "Worker: " << worker.workerName << endl;
         cout << "Reason: Exceeds allowed work hours\n";
     }
@@ -119,11 +119,11 @@ void assignTask(Task &task, WorkerStatus &worker)
 
 void displayTask(const Task &task)
 {
-    cout << "\n--- TASK DETAILS ---\n";
-    cout << "Task ID: " << task.taskID << endl;
-    cout << "Description: " << task.description << endl;
-    cout << "Required Hours: " << task.requiredHours << endl;
-    cout << "Assigned Worker: " << task.assignedWorker << endl;
+    cout <<b_blue<< "\n--- TASK DETAILS ---\n"<<reset<<endl;
+    cout <<b_white<<"Task ID: "<<reset << task.taskID << endl;
+    cout <<b_white<<"Description: " <<reset<< task.description<< endl;
+    cout <<b_white<< "Required Hours: " <<reset<< task.requiredHours << endl;
+    cout <<b_white<<"Assigned Worker: " <<reset<< task.assignedWorker << endl<<endl;
 }
 
 void taskAssignmentPanel()
@@ -960,4 +960,3 @@ int main()
     return 0;
 }
 }
-
