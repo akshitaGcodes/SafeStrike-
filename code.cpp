@@ -30,7 +30,10 @@ class User
         }
 };
 
-string allRoutes[9][6] = {
+const int TOTAL_ROUTES = 9;
+const int MAX_ROUTE_LEN = 6;
+
+string allRoutes[TOTAL_ROUTES][MAX_ROUTE_LEN] = {
     {"Sector N1", "Sector C", "Sector M", "Alt Route S", "Loading Bay", ""},
     {"Sector NW", "Sector C", "Sector M", "Alt Route S", "Loading Bay", ""},
     {"Sector NE", "Sector C", "Sector M", "Alt Route S", "Loading Bay", ""},
@@ -41,6 +44,7 @@ string allRoutes[9][6] = {
     {"Sector C", "Sector M", "Alt Route S", "Loading Bay", "", ""},
     {"Sector M", "Alt Route S", "Loading Bay", "", "", ""}
 };
+
 
 struct Sector
 {
@@ -173,6 +177,64 @@ void assignCoordinates(Sector &s)
         s.y = 99;
     }
 }
+int calculateRouteAQI(string route[])
+{
+    int maxAQI = 0;
+
+    for(int i = 0; i < MAX_ROUTE_LEN; i++)
+    {
+        if(route[i] == "")
+            break;
+
+        int sectorAQI = getSectorAQI(route[i]);
+
+        if(sectorAQI > maxAQI)
+            maxAQI = sectorAQI;
+    }
+
+    return maxAQI;
+}
+int findGreenRouteFromAll(string currentSector)
+{
+    int bestRouteIndex = -1;
+    int bestAQI = 100000;
+
+    for(int i = 0; i < TOTAL_ROUTES; i++)
+    {
+        if(allRoutes[i][0] == currentSector)
+        {
+            cout << "\nChecking Route " << i+1 << "...\n";
+
+            int routeAQI = calculateRouteAQI(allRoutes[i]);
+
+            cout << "Route AQI: " << routeAQI << endl;
+
+            if(routeAQI < bestAQI)
+            {
+                bestAQI = routeAQI;
+                bestRouteIndex = i;
+            }
+        }
+    }
+
+    return bestRouteIndex;
+}
+void displayRoute(string route[])
+{
+    cout << "\n SELECTED GREEN ROUTE:\n";
+
+    for(int i = 0; i < MAX_ROUTE_LEN; i++)
+    {
+        if(route[i] == "")
+            break;
+
+        cout << route[i];
+        if(route[i+1] != "")
+            cout << " -> ";
+    }
+    cout << endl;
+}
+
 
 struct EngineData 
 {
@@ -225,24 +287,24 @@ int calculateDistance(Sector a, Sector b)
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
-Sector findGreenRoute(Sector current, Sector route1, Sector route2) //TO DO
-{
+//Sector findGreenRoute(Sector current, Sector route1, Sector route2) //TO DO
+//{
     
-    if(route1.aqi > 200.00)
-        return route2;
+    //if(route1.aqi > 200.00)
+        //return route2;
 
-    if(route2.aqi > 200.00)
-        return route1;
+    //if(route2.aqi > 200.00)
+        //return route1;
 
     
-    int d1 = calculateDistance(current, route1);
-    int d2 = calculateDistance(current, route2);
+    //int d1 = calculateDistance(current, route1);
+    //int d2 = calculateDistance(current, route2);
 
-    if(d1 <= d2)
-        return route1;
-    else
-        return route2;
-}
+    //if(d1 <= d2)
+        //return route1;
+    //else
+        //return route2;
+//}
 
 Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute) //TO DO
 {
@@ -387,7 +449,8 @@ int main()
                 cout << "4. Show Mine Map" <<endl;
                 cout << "5. Distance between two Sectors"<<endl;
                 cout << "6.Display ESG Score"<<endl;
-                cout << "7. Exit"<<endl;
+                cout<< "7. Find Green Route"<<endl;
+                cout << "8. Exit"<<endl;
 
                 cin >> choice;
 
@@ -502,15 +565,33 @@ int main()
                 else if (choice == 6)
                 {
                     EngineData engine = generateEngineHealthData();
-                    ESGScore score = generateESGScore(aqi, engine, role); // TO DO
+                    int aqi = getSectorAQI("Sector M");
+                    ESGScore score = generateESGScore(aqi,engine,role); // TO DO
                     displayESGScore(score); 
                 }
-        
+                else if (choice == 7)
+                {
+                    cin.ignore(1000, '\n');
+                    string currentSector;
+                    cout << "Enter your Current Sector: ";
+                    getline(cin, currentSector);
+
+                    int bestRouteIndex = findGreenRouteFromAll(currentSector);
+
+                    if(bestRouteIndex != -1)
+                    {
+                        displayRoute(allRoutes[bestRouteIndex]);
+                    }
+                    else
+                    {
+                        cout << "No routes found from the specified sector.\n";
+                    }
+                }
                 else
                 {
                     cout<<"Exiting......";
                 }
-            } while (choice != 7);
+            } while (choice != 8);
         }
             
 
