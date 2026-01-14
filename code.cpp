@@ -260,6 +260,8 @@ int main()
     };
 
     Sector s;
+    Sector s1;
+    Sector s2;
 
     string user_name, password;
     cout << "Welcome to SafeStrike" << endl;
@@ -298,6 +300,7 @@ int main()
             cout << "1. Check Air Quality" << endl;
             cout << "2. Engine Monitoring System" << endl;
             cout << "3. Sector Information" << endl;   
+            cout << "4. Distance between two Sectors"<<endl;
             cin >> choice;
 
              if (choice == 1)
@@ -359,7 +362,31 @@ int main()
                         cout << " is Loading Bay.\n";
                 }
             }
+            else if (choice == 4)
+            {
 
+                cin.ignore(1000, '\n');
+                
+                cout << "Enter your First Sector: ";
+                getline(cin, s1.name); 
+                assignCoordinates(s1); 
+                
+                cout << "Enter your Second Sector: ";
+                getline(cin, s2.name); 
+                assignCoordinates(s2); 
+
+                if (s1.x == 99 || s2.x == 99)
+                 {
+                    cout << "Error: One or both sectors not found in the database." << endl;
+                } 
+                else 
+                {
+                    int d = calculateDistance(s1, s2);
+                    cout << "\nDistance Calculation Result:" << endl;
+                    cout << "The distance between " << s1.name << " and " << s2.name << " is " << d << " units." << endl;
+                }
+            }
+    
             else
             {
                 cout<<"Error......";
