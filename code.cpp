@@ -34,6 +34,14 @@ struct Sector
     string name; 
     int x;
     int y;
+    int Id;
+};
+
+struct Minerals
+{
+    string name; 
+    int Id; // coal 1 iron 2 diamond 3 
+
 };
  
 struct GasData
@@ -77,62 +85,74 @@ void checkGasSafety(int aqi)
 void assignCoordinates(Sector &s)
 {
     
-    if(s.name == "Sector M")
+    if(s.name == "Sector M") // iron ore 
     {
         s.x = 0;
         s.y = 0;
+        s.Id = 2;
     }
-    else if(s.name == "Sector W1")
+    else if(s.name == "Sector W1") //coal 
     {
         s.x = -1;
         s.y = 0;
+        s.Id = 1;
     }
-    else if(s.name == "Sector E1")
+    else if(s.name == "Sector E1") // diamond
     {
         s.x = 1;
         s.y = 0;
+        s.Id = 1;
+
     }
-    else if(s.name == "Sector C")
+    else if(s.name == "Sector C") // diamond 
     {
         s.x = 0;
         s.y = 1;
+        s.Id = 1;
     }
-    else if(s.name == "Alt Route S")
+    else if(s.name == "Alt Route S") //coal
     {
         s.x = -1;
         s.y = 0;
+        s.Id = 1;
     }
-    else if(s.name == "SW")
+    else if(s.name == "SW") // diamond
     {
         s.x = -1;
         s.y = -1;
+        s.Id = 3;
     }
-    else if(s.name == "SE")
+    else if(s.name == "SE") // iron ore
     {
         s.x = 1;
         s.y = -1;
+        s.Id = 2;
     }
-    else if(s.name == "NW")
+    else if(s.name == "NW") //iron ore 
     {
         s.x = -1;
         s.y = 1;
+        s.Id = 2;
     }
-    else if(s.name == "NE")
+    else if(s.name == "NE") //coal
     {
         s.x = 1;
         s.y = 1;
+        s.Id = 1;
     }
-    else if(s.name == "N1")
+    else if(s.name == "N1") //admin office 
     {
         s.x = 0;
         s.y = 2;
+        s.Id = 0;
     }
-    else if(s.name == "Loading Bay") 
+    else if(s.name == "Loading Bay") // delivery 
     {
         s.x = 0;
         s.y = -2;
+        s.Id = 4;
     }
-    else
+    else // not in mine 
     {
         
         s.x = 99;
