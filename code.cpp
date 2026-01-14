@@ -253,6 +253,75 @@ Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute) //TO 
     return mainRoute;
 }
 
+struct ESGScore
+{
+    int environmental;
+    int social;
+    int governance;
+    int total;
+};
+
+
+int calculateEnvironmentalScore(int aqi)
+{
+    if(aqi <= 100) 
+        return 90;
+    else if(aqi <= 150) 
+        return 70;
+    else if(aqi <= 200) 
+        return 40;
+    else 
+        return 20;
+}
+
+int calculateSocialScore(EngineData engine)
+{
+    if(checkEngineHealth(engine))
+        return 85;
+    else
+        return 50;
+}
+
+int calculateGovernanceScore(string role)
+{
+    if(role == "Admin") 
+        return 90;
+    else if(role == "Moderator") 
+        return 75;
+    else 
+        return 60;
+}
+
+
+ESGScore generateESGScore(int aqi, EngineData engine, string role)
+{
+    ESGScore score;
+
+    score.environmental = calculateEnvironmentalScore(aqi);
+    score.social = calculateSocialScore(engine);
+    score.governance = calculateGovernanceScore(role);
+
+    score.total = (score.environmental + score.social + score.governance) / 3;
+
+    return score;
+}
+
+void displayESGScore(ESGScore score)
+{
+    cout << "\n--- ESG SCORE REPORT ---\n";
+    cout << "Environmental Score: " << score.environmental << endl;
+    cout << "Social Score: " << score.social << endl;
+    cout << "Governance Score: " << score.governance << endl;
+    cout << "Overall ESG Score: " << score.total << endl;
+
+    if(score.total >= 80)
+        cout << "Status: Excellent Sustainability\n";
+    else if(score.total >= 60)
+        cout << "Status: Moderate Sustainability\n";
+    else
+        cout << "Status: High Risk -> Needs Improvement\n";
+}
+
 int main() 
 {
     User userDatabase[] = {
@@ -317,7 +386,8 @@ int main()
                 cout << "3. Sector Information" << endl;   
                 cout << "4. Show Mine Map" <<endl;
                 cout << "5. Distance between two Sectors"<<endl;
-                cout << "6. Exit"<<endl;
+                cout << "6.Display ESG Score"<<endl;
+                cout << "7. Exit"<<endl;
 
                 cin >> choice;
 
@@ -428,12 +498,19 @@ int main()
                         cout << "The distance between " << s1.name << " and " << s2.name << " is " << d << " units." << endl;
                     }
                 }
+
+                else if (choice == 6)
+                {
+                    EngineData engine = generateEngineHealthData();
+                    ESGScore score = generateESGScore(aqi, engine, role); // TO DO
+                    displayESGScore(score); 
+                }
         
                 else
                 {
                     cout<<"Exiting......";
                 }
-            } while (choice != 6);
+            } while (choice != 7);
         }
             
 
