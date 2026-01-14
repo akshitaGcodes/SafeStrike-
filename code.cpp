@@ -218,6 +218,13 @@ int main()
     };
     int total_users = 6;
 
+    Minerals MineralInMine[] = {
+                                {"Coal", 1},
+                                {"Iron Ore", 2},
+                                {"Diamond", 3}
+};
+
+
     string user_name, password;
     cout << "Welcome to SafeStrike" << endl;
     cout << "Please enter your login credentials." << endl;
