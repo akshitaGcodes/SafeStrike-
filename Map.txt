@@ -16,3 +16,21 @@
 
 =======================================================================
 
+
+
+Mock Map setup
+
+                                          [ Sector N1 ]  // admin office
+                                                 |
+                                                 |
+     //iron ore    [ Sector NW ] -------- [ Sector C ] // diamond  -------- [ Sector NE ] //coal
+                                                 |
+                                                 |
+           //coal   [ Sector W1 ] -------- [ Sector M ] //iron ore -------- [ Sector E1 ]//diamond 
+                                                 |
+                                                 |
+    //diamond    [ Sector SW ] -------- [ Alt Route S ] // coal ------ [ Sector SE ]//iron ore 
+                                                 |
+                                                 |
+                                           [ Loading Bay ] // delivered 
+
