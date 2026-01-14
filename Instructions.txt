@@ -37,7 +37,11 @@ The system scans all possible paths to the "Loading Bay" and selects the one wit
 6. ESG Score Report (Admin Only)
 Generates a Sustainability Report based on environmental data (AQI), social safety (Engine health), and governance (User roles).
 
-7.Exit and Security
+7. Assign Work to Worker (Admin Only)
+Assigns a predefined task to a worker after checking available working hours.
+The task is assigned only if it does not exceed the worker’s maximum allowed hours.
+
+8. Exit and Security
 Select the Logout & Exit option (Option 6, 7, or 8 depending on your role) to safely close your session.
 Always ensure you logout if you are using a shared terminal in the mine.
 
