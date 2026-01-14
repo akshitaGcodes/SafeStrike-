@@ -204,6 +204,19 @@ void predictMaintenance(EngineData data)
         cout << "🟢 No maintenance required at the moment\n";
     }
 }
+void reportSector(Sector s) {
+                    assignCoordinates(s);
+                    if(s.x == 99 && s.y == 99) {
+                         cout << "Invalid sector: Not in mine.\n";
+                         return;
+                    }
+                 cout << "Sector " << s.name << " coordinates (" << s.x << "," << s.y << ")";
+                 if(s.Id == 1) cout << " contains Coal.\n";
+                 else if(s.Id == 2) cout << " contains Iron Ore.\n";
+                  else if(s.Id == 3) cout << " contains Diamond.\n";
+                  else if(s.Id == 0) cout << " is Admin Office.\n";
+                   else if(s.Id == 4) cout << " is Loading Bay.\n";
+}
 
 
 int main() 
@@ -280,6 +293,10 @@ int main()
                 EngineData engine = generateEngineHealthData();
                 predictMaintenance(engine);
             }
+            else if(choice==3)
+            {
+              void reportSector(Sector s);           
+          }
             else
             {
                 cout<<"Error......";
