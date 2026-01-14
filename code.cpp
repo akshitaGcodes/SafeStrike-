@@ -142,31 +142,31 @@ void assignCoordinates(Sector &s)
         s.y = 0;
         s.Id = 1;
     }
-    else if(s.name == "SW") // diamond
+    else if(s.name == "Sector SW") // diamond
     {
         s.x = -1;
         s.y = -1;
         s.Id = 3;
     }
-    else if(s.name == "SE") // iron ore
+    else if(s.name == "Sector SE") // iron ore
     {
         s.x = 1;
         s.y = -1;
         s.Id = 2;
     }
-    else if(s.name == "NW") //iron ore 
+    else if(s.name == "Sector NW") //iron ore 
     {
         s.x = -1;
         s.y = 1;
         s.Id = 2;
     }
-    else if(s.name == "NE") //coal
+    else if(s.name == "Sector NE") //coal
     {
         s.x = 1;
         s.y = 1;
         s.Id = 1;
     }
-    else if(s.name == "N1") //admin office 
+    else if(s.name == "Sector N1") //admin office 
     {
         s.x = 0;
         s.y = 2;
