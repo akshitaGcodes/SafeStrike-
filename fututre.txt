@@ -1,0 +1,11 @@
+FUTURE OF SAFESTRIKE
+
+Replacing mock data with real-time inputs by 
+integrating Air Quality & Weather APIs, to fetch live NO₂, SO₂, wind speed, and humidity data and 
+GPS APIs (Google Maps), to calculate actual vehicle routes inside and around mining sites.
+This enables dynamic green routing, where vehicle paths automatically adjust based on live pollution levels and weather conditions.
+
+SafeStrike can generate automated environmental reports aligned with government regulations, helping mining companies to be scalable, cost-effective, and adaptable to both small and large mining operations by following methods:
+-Reduce carbon footprint
+-Avoid legal penalties
+-Improve ESG (Environmental, Social, Governance) scores
