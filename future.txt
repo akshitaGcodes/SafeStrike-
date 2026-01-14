@@ -16,6 +16,6 @@ As we look toward the future our roadmap includes a strategic integration with I
 by layering SafeStrike’s real-time safety data directly onto the government’s Geological Survey maps, 
 we can create a 'National Safety Dashboard' for the entire mining sector.
 Imagine a future where every active mine in India is digitally synced. 
-We won't just be protecting individual workers;
+We won't just be protecting;
 we’ll be providing the Ministry of Mines with a live, 3D bird's-eye view of structural stability and hazard zones across the country.
 
