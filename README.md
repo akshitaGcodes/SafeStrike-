@@ -11,5 +11,7 @@ Current mining operations rely on outdated, reactive methods where heavy machine
 
 Idea Pitch 
 https://drive.google.com/file/d/17JbJp0PkjZxKGZAXeSbMHDuOWIzmHjlm/view?usp=sharing
+<img width="558" height="555" alt="image" src="https://github.com/user-attachments/assets/1725cb47-ac6e-4b74-bc3a-942615ec2aef" />
+
 
 
