@@ -77,27 +77,27 @@ void checkGasSafety(int aqi)
 void assignCoordinates(Sector &s)
 {
     
-    if(s.name == "Sector_M")
+    if(s.name == "Sector M")
     {
         s.x = 0;
         s.y = 0;
     }
-    else if(s.name == "Sector_W1")
+    else if(s.name == "Sector W1")
     {
         s.x = -1;
         s.y = 0;
     }
-    else if(s.name == "Sector_E1")
+    else if(s.name == "Sector E1")
     {
         s.x = 1;
         s.y = 0;
     }
-    else if(s.name == "Sector_C")
+    else if(s.name == "Sector C")
     {
         s.x = 0;
         s.y = 1;
     }
-    else if(s.name == "Alt_Route_S")
+    else if(s.name == "Alt Route S")
     {
         s.x = -1;
         s.y = 0;
@@ -127,7 +127,7 @@ void assignCoordinates(Sector &s)
         s.x = 0;
         s.y = 2;
     }
-    else if(s.name == "Loading_Bay") 
+    else if(s.name == "Loading Bay") 
     {
         s.x = 0;
         s.y = -2;
@@ -239,7 +239,8 @@ int main()
                 srand(time(0));
                 string sectorIdCopy;
                 cout << "\nEnter Sector ID to check air quality: ";
-                cin >> sectorIdCopy;
+                cin.ignore(1000, '\n'); 
+                getline(cin, sectorIdCopy);
                 int aqi = getSectorAQI(sectorIdCopy); 
                 checkGasSafety(aqi);
             }
@@ -269,7 +270,8 @@ int main()
                 srand(time(0));
                 string sectorIdCopy;
                 cout << "\nEnter Sector ID to check air quality: ";
-                cin >> sectorIdCopy;
+                cin.ignore(1000, '\n'); 
+                getline(cin, sectorIdCopy);
                 int aqi = getSectorAQI(sectorIdCopy); 
                 checkGasSafety(aqi);
             }
