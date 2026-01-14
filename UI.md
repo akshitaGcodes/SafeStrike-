@@ -1,4 +1,4 @@
-
+https://github.com/user-attachments/assets/115ea818-1e3a-4185-a4d5-737749d316a3
 
 UI in the Future -> Option 1
 
@@ -18,7 +18,7 @@ UI in the Future -> Option 2
 <img width="540" height="650" alt="image" src="https://github.com/user-attachments/assets/69ab934d-1707-4e28-b0e4-974736ad52cd" />
 <img width="540" height="650" alt="image" src="https://github.com/user-attachments/assets/66e31137-f822-45ea-96ea-cd37c0325471" />
 
-https://drive.google.com/file/d/1LZhAW4euLRmNVtu8CelCbjYrnTfUcCvl/view?usp=drivesdk
+
 
 
 
