@@ -2,6 +2,7 @@
 #include <cstring>
 #include <string>
 #include <cstdlib>
+#include <cmath>
 #include <ctime>
 
 using namespace std;
@@ -35,7 +36,7 @@ struct Sector
     int x;
     int y;
     int Id;
-    int aqi;
+    float aqi;
 };
 
 struct Minerals
@@ -205,31 +206,20 @@ void predictMaintenance(EngineData data)
         cout << "🟢 No maintenance required at the moment\n";
     }
 }
-void reportSector(Sector s) {
-                    assignCoordinates(s);
-                    if(s.x == 99 && s.y == 99) {
-                         cout << "Invalid sector: Not in mine.\n";
-                         return;
-                    }
-                 cout << "Sector " << s.name << " coordinates (" << s.x << "," << s.y << ")";
-                 if(s.Id == 1) cout << " contains Coal.\n";
-                 else if(s.Id == 2) cout << " contains Iron Ore.\n";
-                  else if(s.Id == 3) cout << " contains Diamond.\n";
-                  else if(s.Id == 0) cout << " is Admin Office.\n";
-                   else if(s.Id == 4) cout << " is Loading Bay.\n";
-}
+
 int calculateDistance(Sector a, Sector b)
 {
     
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
+
 Sector findGreenRoute(Sector current, Sector route1, Sector route2)
 {
     
-    if(route1.aqi > 200)
+    if(route1.aqi > 200.00)
         return route2;
 
-    if(route2.aqi > 200)
+    if(route2.aqi > 200.00)
         return route1;
 
     
@@ -241,6 +231,7 @@ Sector findGreenRoute(Sector current, Sector route1, Sector route2)
     else
         return route2;
 }
+
 Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute)
 {
     if(mainRoute.aqi > 200)
@@ -249,8 +240,6 @@ Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute)
     }
     return mainRoute;
 }
-
-
 
 int main() 
 {
@@ -268,8 +257,9 @@ int main()
                                 {"Coal", 1},
                                 {"Iron Ore", 2},
                                 {"Diamond", 3}
-};
+    };
 
+    Sector s;
 
     string user_name, password;
     cout << "Welcome to SafeStrike" << endl;
@@ -303,21 +293,24 @@ int main()
 
         if(role == "Admin") 
         {
-            int choice ; 
-            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System"<<endl;
-            cin>> choice;
+            int choice; 
+            cout << "Choose your operation :-" << endl;
+            cout << "1. Check Air Quality" << endl;
+            cout << "2. Engine Monitoring System" << endl;
+            cout << "3. Sector Information" << endl;   
+            cin >> choice;
 
-            if(choice == 1)
+            if (choice == 1)
             {
                 srand(time(0));
-                string sectornameCopy;
-                cout << "\nEnter Sector Name to check air quality: ";
+                string sectorIdCopy;
+                cout << "\nEnter Sector ID to check air quality: ";
                 cin.ignore(1000, '\n'); 
-                getline(cin, sectornameCopy);
-                int aqi = getSectorAQI(sectornameCopy); 
+                getline(cin, sectorIdCopy);
+                int aqi = getSectorAQI(sectorIdCopy); 
                 checkGasSafety(aqi);
             }
-            else if (choice ==2 )
+            else if (choice == 2 )
             {
                 srand(time(0)); 
 
@@ -326,10 +319,34 @@ int main()
                 EngineData engine = generateEngineHealthData();
                 predictMaintenance(engine);
             }
-            else if(choice==3)
+            else if (choice == 3)
             {
-              void reportSector(Sector s);           
-          }
+                cout << "Enter your sector: ";
+                cin.ignore(1000, '\n'); 
+                getline(cin, s.name);   
+                assignCoordinates(s);
+
+                if(s.x == 99 && s.y == 99) 
+                {
+                    cout << "Invalid sector: Not in mine.\n";
+                }
+                else
+                {
+                    cout << "Sector " << s.name << " coordinates (" 
+                        << s.x << "," << s.y << ")";
+                    if(s.Id == 1) 
+                        cout << " contains Coal.\n";
+                    else if(s.Id == 2) 
+                        cout << " contains Iron Ore.\n";
+                    else if(s.Id == 3) 
+                        cout << " contains Diamond.\n";
+                    else if(s.Id == 0) 
+                        cout << " is Admin Office.\n";
+                    else if(s.Id == 4) 
+                        cout << " is Loading Bay.\n";
+                }
+            }
+
             else
             {
                 cout<<"Error......";
@@ -339,17 +356,20 @@ int main()
 
         else if(role == "Moderator") 
         {
-            int choice ; 
-            cout<<"Choose your operation :-"<<endl<<"1.Check Air Quality"<<endl<<"2.Engine Monitoring System"<<endl;
-            cin>> choice;
+            int choice; 
+            cout << "Choose your operation :-" << endl;
+            cout << "1. Check Air Quality" << endl;
+            cout << "2. Engine Monitoring System" << endl;
+    
+            cin >> choice;
             if(choice == 1)
             {
                 srand(time(0));
-                string sectornameCopy;
-                cout << "\nEnter Sector Name to check air quality: ";
+                string sectorIdCopy;
+                cout << "\nEnter Sector ID to check air quality: ";
                 cin.ignore(1000, '\n'); 
-                getline(cin, sectornameCopy);
-                int aqi = getSectorAQI(sectornameCopy); 
+                getline(cin, sectorIdCopy);
+                int aqi = getSectorAQI(sectorIdCopy); 
                 checkGasSafety(aqi);
             }
             else if (choice ==2 )
@@ -370,10 +390,24 @@ int main()
 
          else if(role == "Worker") 
         {
-            int choice ; 
-            cout<<"Choose your operation :-"<<endl<<"1.Engine Monitoring System"<<endl;
-            cin>> choice;
+            int choice; 
+            cout << "Choose your operation :-" << endl;
+            cout << "1. Check Air Quality" << endl;
+            cout << "2. Engine Monitoring System" << endl;
+            cin >> choice;
+
             if(choice == 1)
+            {
+                srand(time(0));
+                string sectorIdCopy;
+                cout << "\nEnter Sector ID to check air quality: ";
+                cin.ignore(1000, '\n'); 
+                getline(cin, sectorIdCopy);
+                int aqi = getSectorAQI(sectorIdCopy); 
+                checkGasSafety(aqi);
+            }
+
+            else if(choice == 2)
             {
                 srand(time(0)); 
 
