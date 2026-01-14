@@ -1,5 +1,3 @@
-https://github.com/user-attachments/assets/115ea818-1e3a-4185-a4d5-737749d316a3
-
 UI in the Future -> Option 1
 
 <img width="1600" height="653" alt="image" src="https://github.com/user-attachments/assets/196aa35f-1852-4c8d-8ff4-94830c1baa9d" />
@@ -9,6 +7,10 @@ UI in the Future -> Option 1
 <img width="1392" height="750" alt="image" src="https://github.com/user-attachments/assets/41db0d69-97dc-4549-9ed3-e0cc8c4849eb" />
 <img width="1600" height="686" alt="image" src="https://github.com/user-attachments/assets/eb367dbc-755f-42a0-bf19-12ed6d823b84" />
 <img width="1600" height="734" alt="image" src="https://github.com/user-attachments/assets/d98d5300-d8d7-4f1b-9d56-1209ee2b0c9b" />
+
+
+https://github.com/user-attachments/assets/f7f5fecb-572f-4d49-b0c9-8c60e6bbdafe
+
 
 
 UI in the Future -> Option 2
