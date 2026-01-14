@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
+#include<limits>
 
 using namespace std;
 
@@ -229,18 +230,18 @@ int findGreenRouteFromAll(string currentSector)
 }
 void displayRoute(string route[])
 {
-    cout << "\n SELECTED GREEN ROUTE:\n";
+    cout <<b_green<< "\n SELECTED GREEN ROUTE:\n"<<reset<<endl;
 
     for(int i = 0; i < MAX_ROUTE_LEN; i++)
     {
         if(route[i] == "")
             break;
 
-        cout << route[i];
+        cout <<b_green<< route[i] <<reset;
         if(route[i+1] != "")
             cout << " -> ";
     }
-    cout << endl;
+    cout << endl<<endl;
 }
 
 
@@ -294,25 +295,6 @@ int calculateDistance(Sector a, Sector b)
     
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
-
-//Sector findGreenRoute(Sector current, Sector route1, Sector route2) //TO DO
-//{
-    
-    //if(route1.aqi > 200.00)
-        //return route2;
-
-    //if(route2.aqi > 200.00)
-        //return route1;
-
-    
-    //int d1 = calculateDistance(current, route1);
-    //int d2 = calculateDistance(current, route2);
-
-    //if(d1 <= d2)
-        //return route1;
-    //else
-        //return route2;
-//}
 
 Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute) //TO DO
 {
@@ -456,18 +438,21 @@ int main()
                 cout << "3. Sector Information" << endl;   
                 cout << "4. Show Mine Map" <<endl;
                 cout << "5. Distance between two Sectors"<<endl;
-                cout << "6.Display ESG Score"<<endl;
-                cout <<  " 7. Find Green Route"<<endl;
-                cout << "8. Exit"<<endl;
+                cout << "6. Display ESG Score"<<endl;
+                cout << "7. Find Green Route"<<endl;
+                cout << b_red << "8. Logout & Exit" << reset << endl;
+                cout << "Selection: ";
 
                 cin >> choice;
+
+                cin.ignore(1000, '\n');
 
                 if (choice == 1)
                     {
                         srand(time(0));
                         string sectorInput;
                         cout << "\nEnter Sector Name (e.g., Sector W1): ";
-                        cin.ignore(1000, '\n'); 
+                        //cin.ignore(1000, '\n'); 
                         getline(cin, sectorInput);
 
                         int aqi = getSectorAQI(sectorInput); 
@@ -496,30 +481,35 @@ int main()
                 }
                 else if (choice == 3)
                 {
-                    cout << "Enter your sector: ";
-                    cin.ignore(1000, '\n'); 
-                    getline(cin, s.name);   
+                    if (cin.peek() == '\n') cin.ignore(); 
+
+                    cout << "Enter your sector (e.g., Sector NW, Sector M, Loading Bay): ";
+                    getline(cin, s.name);  
+
                     assignCoordinates(s);
 
-                    if(s.x == 99 && s.y == 99) 
+                    if (s.x == 99 && s.y == 99)
                     {
-                        cout << "Invalid sector: Not in mine.\n";
+                        cout << b_red << "Invalid sector: '" << s.name << "' not found in database." << reset << endl;
+                        cout << "Hint: Check spelling or use 'Show Mine Map' for valid names." << endl;
                     }
                     else
                     {
-                        cout << "Sector " << s.name << " coordinates (" 
-                            << s.x << "," << s.y << ")";
-                        if(s.Id == 1) 
-                            cout << " contains Coal.\n";
-                        else if(s.Id == 2) 
-                            cout << " contains Iron Ore.\n";
-                        else if(s.Id == 3) 
-                            cout << " contains Diamond.\n";
-                        else if(s.Id == 0) 
-                            cout << " is Admin Office.\n";
-                        else if(s.Id == 4) 
-                            cout << " is Loading Bay.\n";
-                    }
+                        cout << "\n" << b_blue << "========= SECTOR PROFILE =========" << reset << endl;
+                        cout << "Name        : " << s.name << endl;
+                        cout << "Coordinates : (" << s.x << ", " << s.y << ")" << endl;
+
+                        cout << "Type        : ";
+                        switch(s.Id) {
+                            case 0: cout << "Admin Office"; break;
+                            case 1: cout << "Resource Node (Coal)"; break;
+                            case 2: cout << "Resource Node (Iron Ore)"; break;
+                            case 3: cout << "Resource Node (Diamond)"; break;
+                            case 4: cout << "Loading Bay"; break;
+                            default: cout << "General Access Area";
+                        }
+                        cout << "\n==================================\n" << endl;
+                }
                 }
                 else if (choice == 4)
                         {
@@ -547,8 +537,7 @@ int main()
 
                 else if (choice == 5)
                 {
-
-                    cin.ignore(1000, '\n');
+                    //cin.ignore(1000, '\n');
 
                     cout << "Enter your First Sector: ";
                     getline(cin, s1.name); 
@@ -565,8 +554,8 @@ int main()
                     else 
                     {
                         int d = calculateDistance(s1, s2);
-                        cout << "\nDistance Calculation Result:" << endl;
-                        cout << "The distance between " << s1.name << " and " << s2.name << " is " << d << " units." << endl;
+                        cout <<b_white<< "\nDistance Calculation Result:"<<reset << endl;
+                        cout << "The distance between " << s1.name << " and " << s2.name << " is " <<b_blue<< d <<reset<<" units." << endl<<endl;
                     }
                 }
 
@@ -574,7 +563,6 @@ int main()
                 {
                     string sectorQ;
 
-                    cin.ignore(1000, '\n');
                     cout << "Enter your Sector: ";
                     getline(cin, sectorQ); 
 
@@ -586,7 +574,6 @@ int main()
 
                 else if (choice == 7)
                 {
-                    cin.ignore(1000, '\n');
                     string currentSector;
                     cout << "Enter your Current Sector: ";
                     getline(cin, currentSector);
@@ -599,7 +586,7 @@ int main()
                     }
                     else
                     {
-                        cout << "No routes found from the specified sector.\n";
+                        cout <<b_red<< "No routes found from the specified sector."<<endl<<reset<<endl;
                     }
                 }
                 else
@@ -613,25 +600,47 @@ int main()
         else if(role == "Moderator") 
         {
             int choice; 
-            do 
+            
+            do
             {
                 cout << "Choose your operation :-" << endl;
                 cout << "1. Check Air Quality" << endl;
                 cout << "2. Engine Monitoring System" << endl;
-                cout << "3. Exit"<<endl;
+                cout << "3. Sector Information" << endl;   
+                cout << "4. Show Mine Map" <<endl;
+                cout << "5. Distance between two Sectors"<<endl;
+                cout << "6. Find Green Route"<<endl;
+                cout << b_red << "7. Logout & Exit" << reset << endl;
+                cout << "Selection: ";
 
                 cin >> choice;
-                if(choice == 1)
-                {
-                    srand(time(0));
-                    string sectorIdCopy;
-                    cout << "\nEnter Sector ID to check air quality: ";
-                    cin.ignore(1000, '\n'); 
-                    getline(cin, sectorIdCopy);
-                    int aqi = getSectorAQI(sectorIdCopy); 
-                    checkGasSafety(aqi);
-                }
-                else if (choice ==2 )
+
+                cin.ignore(1000, '\n');
+
+                if (choice == 1)
+                    {
+                        srand(time(0));
+                        string sectorInput;
+                        cout << "\nEnter Sector Name (e.g., Sector W1): ";
+                        //cin.ignore(1000, '\n'); 
+                        getline(cin, sectorInput);
+
+                        int aqi = getSectorAQI(sectorInput); 
+                        checkGasSafety(aqi);
+
+                        Sector current;
+                        current.name = sectorInput;
+                        current.aqi = (float)aqi;
+                        assignCoordinates(current);
+
+                        if(current.x != 99) 
+                        {
+                            cout << "Location: (" << current.x << "," << current.y << ") | ";
+                            if(current.Id >= 1 && current.Id <= 3) 
+                                cout << "Resource: " << MineralInMine[current.Id-1].name << endl;
+                        }
+                    }
+                else if (choice == 2 )
                 {
                     srand(time(0)); 
 
@@ -640,36 +649,151 @@ int main()
                     EngineData engine = generateEngineHealthData();
                     predictMaintenance(engine);
                 }
+                else if (choice == 3)
+                {
+                    if (cin.peek() == '\n') cin.ignore(); 
+
+                    cout << "Enter your sector (e.g., Sector NW, Sector M, Loading Bay): ";
+                    getline(cin, s.name);  
+
+                    assignCoordinates(s);
+
+                    if (s.x == 99 && s.y == 99)
+                    {
+                        cout << b_red << "Invalid sector: '" << s.name << "' not found in database." << reset << endl;
+                        cout << "Hint: Check spelling or use 'Show Mine Map' for valid names." << endl;
+                    }
+                    else
+                    {
+                        cout << "\n" << b_blue << "========= SECTOR PROFILE =========" << reset << endl;
+                        cout << "Name        : " << s.name << endl;
+                        cout << "Coordinates : (" << s.x << ", " << s.y << ")" << endl;
+
+                        cout << "Type        : ";
+                        switch(s.Id) {
+                            case 0: cout << "Admin Office"; break;
+                            case 1: cout << "Resource Node (Coal)"; break;
+                            case 2: cout << "Resource Node (Iron Ore)"; break;
+                            case 3: cout << "Resource Node (Diamond)"; break;
+                            case 4: cout << "Loading Bay"; break;
+                            default: cout << "General Access Area";
+                        }
+                        cout << "\n==================================\n" << endl;
+                }
+                }
+                else if (choice == 4)
+                        {
+                            const char* mineMap = R"(
+                        ====================== SAFE STRIKE : BASE MINE MAP ======================
+
+                                                    [ Sector N1 ]                     
+                                                        |                         
+                                                        |                              
+                        [ Sector NW ] -------- [ Sector C ] -------- [ Sector NE ]
+                                                        |                              
+                                                        |                              
+                        [ Sector W1 ] -------- [ Sector M ] -------- [ Sector E1 ]
+                                                        |                              
+                                                        |                              
+                        [ Sector SW ] -------- [ Alt Route S ] ------ [ Sector SE ]
+                                                        |                              
+                                                        |                              
+                                                [ Loading Bay ]
+
+                        =======================================================================
+                        )";
+                            cout << mineMap << endl;
+                        }
+
+                else if (choice == 5)
+                {
+                    //cin.ignore(1000, '\n');
+
+                    cout << "Enter your First Sector: ";
+                    getline(cin, s1.name); 
+                    assignCoordinates(s1); 
+                    
+                    cout << "Enter your Second Sector: ";
+                    getline(cin, s2.name); 
+                    assignCoordinates(s2); 
+
+                    if (s1.x == 99 || s2.x == 99)
+                    {
+                        cout << "Error: One or both sectors not found in the database." << endl;
+                    } 
+                    else 
+                    {
+                        int d = calculateDistance(s1, s2);
+                        cout <<b_white<< "\nDistance Calculation Result:"<<reset << endl;
+                        cout << "The distance between " << s1.name << " and " << s2.name << " is " <<b_blue<< d <<reset<<" units." << endl<<endl;
+                    }
+                }
+
+                else if (choice == 6)
+                {
+                    string currentSector;
+                    cout << "Enter your Current Sector: ";
+                    getline(cin, currentSector);
+
+                    int bestRouteIndex = findGreenRouteFromAll(currentSector);
+
+                    if(bestRouteIndex != -1)
+                    {
+                        displayRoute(allRoutes[bestRouteIndex]);
+                    }
+                    else
+                    {
+                        cout <<b_red<< "No routes found from the specified sector."<<endl<<reset<<endl;
+                    }
+                }
                 else
                 {
                     cout<<"Exiting......";
                 }
-                }while(choice != 3);          
-        }
-
-         else if(role == "Worker") 
+            } while (choice != 7);
+        }       
+        else if(role == "Worker") 
         {
-             int choice; 
+            int choice; 
             do 
             {
                 cout << "Choose your operation :-" << endl;
                 cout << "1. Check Air Quality" << endl;
                 cout << "2. Engine Monitoring System" << endl;
-                cout << "3. Exit"<<endl;
+                cout << "3. Sector Information" << endl;   
+                cout << "4. Show Mine Map" <<endl;
+                cout << "5. Distance between two Sectors"<<endl;
+                cout << b_red << "6. Logout & Exit" << reset << endl;
+                cout << "Selection: ";
 
-        
                 cin >> choice;
-                if(choice == 1)
-                {
-                    srand(time(0));
-                    string sectorIdCopy;
-                    cout << "\nEnter Sector ID to check air quality: ";
-                    cin.ignore(1000, '\n'); 
-                    getline(cin, sectorIdCopy);
-                    int aqi = getSectorAQI(sectorIdCopy); 
-                    checkGasSafety(aqi);
-                }
-                else if (choice ==2 )
+
+                cin.ignore(1000, '\n');
+
+                if (choice == 1)
+                    {
+                        srand(time(0));
+                        string sectorInput;
+                        cout << "\nEnter Sector Name (e.g., Sector W1): ";
+                        //cin.ignore(1000, '\n'); 
+                        getline(cin, sectorInput);
+
+                        int aqi = getSectorAQI(sectorInput); 
+                        checkGasSafety(aqi);
+
+                        Sector current;
+                        current.name = sectorInput;
+                        current.aqi = (float)aqi;
+                        assignCoordinates(current);
+
+                        if(current.x != 99) 
+                        {
+                            cout << "Location: (" << current.x << "," << current.y << ") | ";
+                            if(current.Id >= 1 && current.Id <= 3) 
+                                cout << "Resource: " << MineralInMine[current.Id-1].name << endl;
+                        }
+                    }
+                else if (choice == 2 )
                 {
                     srand(time(0)); 
 
@@ -678,13 +802,93 @@ int main()
                     EngineData engine = generateEngineHealthData();
                     predictMaintenance(engine);
                 }
+                else if (choice == 3)
+                {
+                    if (cin.peek() == '\n') cin.ignore(); 
+
+                    cout << "Enter your sector (e.g., Sector NW, Sector M, Loading Bay): ";
+                    getline(cin, s.name);  
+
+                    assignCoordinates(s);
+
+                    if (s.x == 99 && s.y == 99)
+                    {
+                        cout << b_red << "Invalid sector: '" << s.name << "' not found in database." << reset << endl;
+                        cout << "Hint: Check spelling or use 'Show Mine Map' for valid names." << endl;
+                    }
+                    else
+                    {
+                        cout << "\n" << b_blue << "========= SECTOR PROFILE =========" << reset << endl;
+                        cout << "Name        : " << s.name << endl;
+                        cout << "Coordinates : (" << s.x << ", " << s.y << ")" << endl;
+
+                        cout << "Type        : ";
+                        switch(s.Id) 
+                        {
+                            case 0: cout << "Admin Office"; break;
+                            case 1: cout << "Resource Node (Coal)"; break;
+                            case 2: cout << "Resource Node (Iron Ore)"; break;
+                            case 3: cout << "Resource Node (Diamond)"; break;
+                            case 4: cout << "Loading Bay"; break;
+                            default: cout << "General Access Area";
+                        }
+                        cout << "\n==================================\n" << endl;
+                }
+                }
+                else if (choice == 4)
+                        {
+                            const char* mineMap = R"(
+                        ====================== SAFE STRIKE : BASE MINE MAP ======================
+
+                                                    [ Sector N1 ]                     
+                                                        |                         
+                                                        |                              
+                        [ Sector NW ] -------- [ Sector C ] -------- [ Sector NE ]
+                                                        |                              
+                                                        |                              
+                        [ Sector W1 ] -------- [ Sector M ] -------- [ Sector E1 ]
+                                                        |                              
+                                                        |                              
+                        [ Sector SW ] -------- [ Alt Route S ] ------ [ Sector SE ]
+                                                        |                              
+                                                        |                              
+                                                [ Loading Bay ]
+
+                        =======================================================================
+                        )";
+                            cout << mineMap << endl;
+                        }
+
+                else if (choice == 5)
+                {
+                    //cin.ignore(1000, '\n');
+
+                    cout << "Enter your First Sector: ";
+                    getline(cin, s1.name); 
+                    assignCoordinates(s1); 
+                    
+                    cout << "Enter your Second Sector: ";
+                    getline(cin, s2.name); 
+                    assignCoordinates(s2); 
+
+                    if (s1.x == 99 || s2.x == 99)
+                    {
+                        cout << "Error: One or both sectors not found in the database." << endl;
+                    } 
+                    else 
+                    {
+                        int d = calculateDistance(s1, s2);
+                        cout <<b_white<< "\nDistance Calculation Result:"<<reset << endl;
+                        cout << "The distance between " << s1.name << " and " << s2.name << " is " <<b_blue<< d <<reset<<" units." << endl<<endl;
+                    }
+                }
                 else
                 {
                     cout<<"Exiting......";
                 }
-                }while(choice != 3);    
-        } 
-
-    }
+            } while (choice != 6);
+        }
     return 0;
 }
+}
+
