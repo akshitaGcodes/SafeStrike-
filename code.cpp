@@ -154,7 +154,7 @@ int getSectorAQI(string sectorIdCopy)
 {
     GasData data = generateMockGasData();
 
-    cout << "\n" << sectorIdCopy <<b_white<< "Air Quality Data" <<reset<<endl;
+    cout << "\n" << sectorIdCopy <<b_white<< " Air Quality Data" <<reset<<endl;
     cout << "\nNO2: " << data.NO2;
     cout << "\nSO2: " << data.SO2;
     cout << "\nAQI: " << data.AQI << endl;
@@ -487,7 +487,7 @@ int main()
     else 
     {
         cout << b_green  << "\nAccess Granted!" << reset << endl;
-        cout << "Welcome " <<b_white << user_name << "(" << role << ")"<<reset<< "to the SafeStrike Dashboard!!" << endl;
+        cout << "Welcome " <<b_white << user_name  << "(" <<  role  << ")"<<reset<< "to the SafeStrike Dashboard!!" << endl;
 
         if(role == "Admin") 
         {
