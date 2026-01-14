@@ -30,6 +30,18 @@ class User
         }
 };
 
+string allRoutes[9][6] = {
+    {"Sector N1", "Sector C", "Sector M", "Alt Route S", "Loading Bay", ""},
+    {"Sector NW", "Sector C", "Sector M", "Alt Route S", "Loading Bay", ""},
+    {"Sector NE", "Sector C", "Sector M", "Alt Route S", "Loading Bay", ""},
+    {"Sector W1", "Sector M", "Alt Route S", "Loading Bay", "", ""},
+    {"Sector E1", "Sector M", "Alt Route S", "Loading Bay", "", ""},
+    {"Sector SW", "Alt Route S", "Loading Bay", "", "", ""},
+    {"Sector SE", "Alt Route S", "Loading Bay", "", "", ""},
+    {"Sector C", "Sector M", "Alt Route S", "Loading Bay", "", ""},
+    {"Sector M", "Alt Route S", "Loading Bay", "", "", ""}
+};
+
 struct Sector
 {
     string name; 
@@ -213,7 +225,7 @@ int calculateDistance(Sector a, Sector b)
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
-Sector findGreenRoute(Sector current, Sector route1, Sector route2)
+Sector findGreenRoute(Sector current, Sector route1, Sector route2) //TO DO
 {
     
     if(route1.aqi > 200.00)
@@ -232,7 +244,7 @@ Sector findGreenRoute(Sector current, Sector route1, Sector route2)
         return route2;
 }
 
-Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute)
+Sector switchToAlternativeRoute(Sector mainRoute, Sector alternativeRoute) //TO DO
 {
     if(mainRoute.aqi > 200)
     {
@@ -296,196 +308,208 @@ int main()
         if(role == "Admin") 
         {
             int choice; 
-            cout << "Choose your operation :-" << endl;
-            cout << "1. Check Air Quality" << endl;
-            cout << "2. Engine Monitoring System" << endl;
-            cout << "3. Sector Information" << endl;   
-            cout << "4.Show Mine Map" <<endl;
-            cout << "5. Distance between two Sectors"<<endl;
+            
+            do
+            {
+                cout << "Choose your operation :-" << endl;
+                cout << "1. Check Air Quality" << endl;
+                cout << "2. Engine Monitoring System" << endl;
+                cout << "3. Sector Information" << endl;   
+                cout << "4. Show Mine Map" <<endl;
+                cout << "5. Distance between two Sectors"<<endl;
+                cout << "6. Exit"<<endl;
 
-            cin >> choice;
+                cin >> choice;
 
-             if (choice == 1)
-                {
-                    srand(time(0));
-                    string sectorInput;
-                    cout << "\nEnter Sector Name (e.g., Sector W1): ";
-                    cin.ignore(1000, '\n'); 
-                    getline(cin, sectorInput);
-
-                    int aqi = getSectorAQI(sectorInput); 
-                    checkGasSafety(aqi);
-
-                    Sector current;
-                    current.name = sectorInput;
-                    current.aqi = (float)aqi;
-                    assignCoordinates(current);
-
-                    if(current.x != 99) 
+                if (choice == 1)
                     {
-                        cout << "Location: (" << current.x << "," << current.y << ") | ";
-                        if(current.Id >= 1 && current.Id <= 3) 
-                            cout << "Resource: " << MineralInMine[current.Id-1].name << endl;
+                        srand(time(0));
+                        string sectorInput;
+                        cout << "\nEnter Sector Name (e.g., Sector W1): ";
+                        cin.ignore(1000, '\n'); 
+                        getline(cin, sectorInput);
+
+                        int aqi = getSectorAQI(sectorInput); 
+                        checkGasSafety(aqi);
+
+                        Sector current;
+                        current.name = sectorInput;
+                        current.aqi = (float)aqi;
+                        assignCoordinates(current);
+
+                        if(current.x != 99) 
+                        {
+                            cout << "Location: (" << current.x << "," << current.y << ") | ";
+                            if(current.Id >= 1 && current.Id <= 3) 
+                                cout << "Resource: " << MineralInMine[current.Id-1].name << endl;
+                        }
+                    }
+                else if (choice == 2 )
+                {
+                    srand(time(0)); 
+
+                    cout << "===== SafeStrike Engine Monitoring System =====\n";
+
+                    EngineData engine = generateEngineHealthData();
+                    predictMaintenance(engine);
+                }
+                else if (choice == 3)
+                {
+                    cout << "Enter your sector: ";
+                    cin.ignore(1000, '\n'); 
+                    getline(cin, s.name);   
+                    assignCoordinates(s);
+
+                    if(s.x == 99 && s.y == 99) 
+                    {
+                        cout << "Invalid sector: Not in mine.\n";
+                    }
+                    else
+                    {
+                        cout << "Sector " << s.name << " coordinates (" 
+                            << s.x << "," << s.y << ")";
+                        if(s.Id == 1) 
+                            cout << " contains Coal.\n";
+                        else if(s.Id == 2) 
+                            cout << " contains Iron Ore.\n";
+                        else if(s.Id == 3) 
+                            cout << " contains Diamond.\n";
+                        else if(s.Id == 0) 
+                            cout << " is Admin Office.\n";
+                        else if(s.Id == 4) 
+                            cout << " is Loading Bay.\n";
                     }
                 }
-            else if (choice == 2 )
-            {
-                srand(time(0)); 
+                else if (choice == 4)
+                        {
+                            const char* mineMap = R"(
+                        ====================== SAFE STRIKE : BASE MINE MAP ======================
 
-                cout << "===== SafeStrike Engine Monitoring System =====\n";
+                                                    [ Sector N1 ]                     
+                                                        |                         
+                                                        |                              
+                        [ Sector NW ] -------- [ Sector C ] -------- [ Sector NE ]
+                                                        |                              
+                                                        |                              
+                        [ Sector W1 ] -------- [ Sector M ] -------- [ Sector E1 ]
+                                                        |                              
+                                                        |                              
+                        [ Sector SW ] -------- [ Alt Route S ] ------ [ Sector SE ]
+                                                        |                              
+                                                        |                              
+                                                [ Loading Bay ]
 
-                EngineData engine = generateEngineHealthData();
-                predictMaintenance(engine);
-            }
-            else if (choice == 3)
-            {
-                cout << "Enter your sector: ";
-                cin.ignore(1000, '\n'); 
-                getline(cin, s.name);   
-                assignCoordinates(s);
+                        =======================================================================
+                        )";
+                            cout << mineMap << endl;
+                        }
 
-                if(s.x == 99 && s.y == 99) 
+                else if (choice == 5)
                 {
-                    cout << "Invalid sector: Not in mine.\n";
+
+                    cin.ignore(1000, '\n');
+
+                    cout << "Enter your First Sector: ";
+                    getline(cin, s1.name); 
+                    assignCoordinates(s1); 
+                    
+                    cout << "Enter your Second Sector: ";
+                    getline(cin, s2.name); 
+                    assignCoordinates(s2); 
+
+                    if (s1.x == 99 || s2.x == 99)
+                    {
+                        cout << "Error: One or both sectors not found in the database." << endl;
+                    } 
+                    else 
+                    {
+                        int d = calculateDistance(s1, s2);
+                        cout << "\nDistance Calculation Result:" << endl;
+                        cout << "The distance between " << s1.name << " and " << s2.name << " is " << d << " units." << endl;
+                    }
                 }
+        
                 else
                 {
-                    cout << "Sector " << s.name << " coordinates (" 
-                        << s.x << "," << s.y << ")";
-                    if(s.Id == 1) 
-                        cout << " contains Coal.\n";
-                    else if(s.Id == 2) 
-                        cout << " contains Iron Ore.\n";
-                    else if(s.Id == 3) 
-                        cout << " contains Diamond.\n";
-                    else if(s.Id == 0) 
-                        cout << " is Admin Office.\n";
-                    else if(s.Id == 4) 
-                        cout << " is Loading Bay.\n";
+                    cout<<"Exiting......";
                 }
-            }
-            else if (choice == 4)
-                    {
-                        const char* mineMap = R"(
-                    ====================== SAFE STRIKE : BASE MINE MAP ======================
-
-                                                [ Sector N1 ]                     
-                                                    |                         
-                                                    |                              
-                      [ Sector NW ] -------- [ Sector C ] -------- [ Sector NE ]
-                                                    |                              
-                                                    |                              
-                      [ Sector W1 ] -------- [ Sector M ] -------- [ Sector E1 ]
-                                                    |                              
-                                                    |                              
-                      [ Sector SW ] -------- [ Alt Route S ] ------ [ Sector SE ]
-                                                    |                              
-                                                    |                              
-                                             [ Loading Bay ]
-                                              
-                    =======================================================================
-                    )";
-                        cout << mineMap << endl;
-                    }
-
-            else if (choice == 5)
-            {
-
-                cin.ignore(1000, '\n');
-
-                cout << "Enter your First Sector: ";
-                getline(cin, s1.name); 
-                assignCoordinates(s1); 
-                
-                cout << "Enter your Second Sector: ";
-                getline(cin, s2.name); 
-                assignCoordinates(s2); 
-
-                if (s1.x == 99 || s2.x == 99)
-                 {
-                    cout << "Error: One or both sectors not found in the database." << endl;
-                } 
-                else 
-                {
-                    int d = calculateDistance(s1, s2);
-                    cout << "\nDistance Calculation Result:" << endl;
-                    cout << "The distance between " << s1.name << " and " << s2.name << " is " << d << " units." << endl;
-                }
-            }
-    
-            else
-            {
-                cout<<"Error......";
-            }
-
-        } 
+            } while (choice != 6);
+        }
+            
 
         else if(role == "Moderator") 
         {
             int choice; 
-            cout << "Choose your operation :-" << endl;
-            cout << "1. Check Air Quality" << endl;
-            cout << "2. Engine Monitoring System" << endl;
-    
-            cin >> choice;
-            if(choice == 1)
+            do 
             {
-                srand(time(0));
-                string sectorIdCopy;
-                cout << "\nEnter Sector ID to check air quality: ";
-                cin.ignore(1000, '\n'); 
-                getline(cin, sectorIdCopy);
-                int aqi = getSectorAQI(sectorIdCopy); 
-                checkGasSafety(aqi);
-            }
-            else if (choice ==2 )
-            {
-                srand(time(0)); 
+                cout << "Choose your operation :-" << endl;
+                cout << "1. Check Air Quality" << endl;
+                cout << "2. Engine Monitoring System" << endl;
+                cout << "3. Exit"<<endl;
 
-                cout << "===== SafeStrike Engine Monitoring System =====\n";
+                cin >> choice;
+                if(choice == 1)
+                {
+                    srand(time(0));
+                    string sectorIdCopy;
+                    cout << "\nEnter Sector ID to check air quality: ";
+                    cin.ignore(1000, '\n'); 
+                    getline(cin, sectorIdCopy);
+                    int aqi = getSectorAQI(sectorIdCopy); 
+                    checkGasSafety(aqi);
+                }
+                else if (choice ==2 )
+                {
+                    srand(time(0)); 
 
-                EngineData engine = generateEngineHealthData();
-                predictMaintenance(engine);
-            }
-            else
-            {
-                cout<<"Error......";
-            }
-           
+                    cout << "===== SafeStrike Engine Monitoring System =====\n";
+
+                    EngineData engine = generateEngineHealthData();
+                    predictMaintenance(engine);
+                }
+                else
+                {
+                    cout<<"Exiting......";
+                }
+                }while(choice != 3);          
         }
 
          else if(role == "Worker") 
         {
-            int choice; 
-            cout << "Choose your operation :-" << endl;
-            cout << "1. Check Air Quality" << endl;
-            cout << "2. Engine Monitoring System" << endl;
-            cin >> choice;
-
-            if(choice == 1)
+             int choice; 
+            do 
             {
-                srand(time(0));
-                string sectorIdCopy;
-                cout << "\nEnter Sector ID to check air quality: ";
-                cin.ignore(1000, '\n'); 
-                getline(cin, sectorIdCopy);
-                int aqi = getSectorAQI(sectorIdCopy); 
-                checkGasSafety(aqi);
-            }
+                cout << "Choose your operation :-" << endl;
+                cout << "1. Check Air Quality" << endl;
+                cout << "2. Engine Monitoring System" << endl;
+                cout << "3. Exit"<<endl;
 
-            else if(choice == 2)
-            {
-                srand(time(0)); 
+        
+                cin >> choice;
+                if(choice == 1)
+                {
+                    srand(time(0));
+                    string sectorIdCopy;
+                    cout << "\nEnter Sector ID to check air quality: ";
+                    cin.ignore(1000, '\n'); 
+                    getline(cin, sectorIdCopy);
+                    int aqi = getSectorAQI(sectorIdCopy); 
+                    checkGasSafety(aqi);
+                }
+                else if (choice ==2 )
+                {
+                    srand(time(0)); 
 
-                cout << "===== SafeStrike Engine Monitoring System =====\n";
+                    cout << "===== SafeStrike Engine Monitoring System =====\n";
 
-                EngineData engine = generateEngineHealthData();
-                predictMaintenance(engine);
-            }
-            else
-            {
-                cout<<"Error......";
-            }
+                    EngineData engine = generateEngineHealthData();
+                    predictMaintenance(engine);
+                }
+                else
+                {
+                    cout<<"Exiting......";
+                }
+                }while(choice != 3);    
         } 
 
     }
