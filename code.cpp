@@ -77,6 +77,69 @@ struct GasData
     int SO2;
     int AQI;
 };
+struct Task
+{
+    string taskID;
+    string description;
+    int requiredHours;
+    string assignedWorker;
+};
+
+struct WorkerStatus
+{
+    string workerName;
+    int hoursWorked;
+    int maxHours;
+};
+
+bool isWorkerAvailable(const WorkerStatus &worker, int taskHours)
+{
+    return (worker.hoursWorked + taskHours <= worker.maxHours);
+}
+void assignTask(Task &task, WorkerStatus &worker)
+{
+    if (isWorkerAvailable(worker, task.requiredHours))
+    {
+        task.assignedWorker = worker.workerName;
+        worker.hoursWorked += task.requiredHours;
+
+        cout << "\n✅ Task Assigned Successfully\n";
+        cout << "Task: " << task.description << endl;
+        cout << "Assigned To: " << worker.workerName << endl;
+        cout << "Total Hours Worked: " 
+             << worker.hoursWorked << "/" << worker.maxHours << endl;
+    }
+    else
+    {
+        cout << "\n⚠ Cannot Assign Task\n";
+        cout << "Worker: " << worker.workerName << endl;
+        cout << "Reason: Exceeds allowed work hours\n";
+    }
+}
+
+void displayTask(const Task &task)
+{
+    cout << "\n--- TASK DETAILS ---\n";
+    cout << "Task ID: " << task.taskID << endl;
+    cout << "Description: " << task.description << endl;
+    cout << "Required Hours: " << task.requiredHours << endl;
+    cout << "Assigned Worker: " << task.assignedWorker << endl;
+}
+
+void taskAssignmentPanel()
+{
+    WorkerStatus worker = {"Worker_1", 4, 8};
+
+    Task task = {
+        "T-101",
+        "Inspect ventilation system in Sector C",
+        3,
+        "Not Assigned"
+    };
+
+    assignTask(task, worker);
+    displayTask(task);
+}
 
 GasData generateMockGasData()
 {
