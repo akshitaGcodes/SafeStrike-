@@ -439,8 +439,9 @@ int main()
                 cout << "4. Show Mine Map" <<endl;
                 cout << "5. Distance between two Sectors"<<endl;
                 cout << "6. Display ESG Score"<<endl;
-                cout << "7. Find Green Route"<<endl;
-                cout << b_red << "8. Logout & Exit" << reset << endl;
+                cout << "7. Assign Work to Worker"<<endl;
+                cout << "8. Find Green Route"<<endl;
+                cout << b_red << "9. Logout & Exit" << reset << endl;
                 cout << "Selection: ";
 
                 cin >> choice;
@@ -571,8 +572,13 @@ int main()
                     ESGScore score = generateESGScore(aqi,engine,role); 
                     displayESGScore(score); 
                 }
+                 else if (choice == 7)                               
+                {
+                    taskAssignmentPanel();                            
+                }
 
-                else if (choice == 7)
+
+                else if (choice == 8)
                 {
                     string currentSector;
                     cout << "Enter your Current Sector: ";
@@ -593,7 +599,7 @@ int main()
                 {
                     cout<<"Exiting......";
                 }
-            } while (choice != 8);
+            } while (choice != 9);
         }
             
 
