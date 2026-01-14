@@ -35,6 +35,7 @@ struct Sector
     int x;
     int y;
     int Id;
+    int aqi;
 };
 
 struct Minerals
