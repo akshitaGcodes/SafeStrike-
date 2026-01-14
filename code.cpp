@@ -300,16 +300,29 @@ int main()
             cout << "3. Sector Information" << endl;   
             cin >> choice;
 
-            if (choice == 1)
-            {
-                srand(time(0));
-                string sectorIdCopy;
-                cout << "\nEnter Sector ID to check air quality: ";
-                cin.ignore(1000, '\n'); 
-                getline(cin, sectorIdCopy);
-                int aqi = getSectorAQI(sectorIdCopy); 
-                checkGasSafety(aqi);
-            }
+             if (choice == 1)
+                {
+                    srand(time(0));
+                    string sectorInput;
+                    cout << "\nEnter Sector Name (e.g., Sector W1): ";
+                    cin.ignore(1000, '\n'); 
+                    getline(cin, sectorInput);
+
+                    int aqi = getSectorAQI(sectorInput); 
+                    checkGasSafety(aqi);
+
+                    Sector current;
+                    current.name = sectorInput;
+                    current.aqi = (float)aqi;
+                    assignCoordinates(current);
+
+                    if(current.x != 99) 
+                    {
+                        cout << "Location: (" << current.x << "," << current.y << ") | ";
+                        if(current.Id >= 1 && current.Id <= 3) 
+                            cout << "Resource: " << MineralInMine[current.Id-1].name << endl;
+                    }
+                }
             else if (choice == 2 )
             {
                 srand(time(0)); 
