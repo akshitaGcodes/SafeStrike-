@@ -173,9 +173,9 @@ struct EngineData
 EngineData generateEngineHealthData()
  {
     EngineData data;
-    data.temperature = 60 + rand() % 50;    // 60–109 °C
-    data.vibration   = rand() % 100;        // 0–99
-    data.rpm         = 800 + rand() % 2200; // 800–2999 RPM
+    data.temperature = 60 + rand() % 50;    
+    data.vibration   = rand() % 100;        
+    data.rpm         = 800 + rand() % 2200; 
     return data;
 }
 
@@ -183,9 +183,9 @@ bool checkEngineHealth(EngineData data)
 {
     if (data.temperature > 95 || data.vibration > 70 || data.rpm > 2800) 
     {
-        return false;  // unhealthy
+        return false;  
     }
-    return true;       // healthy
+    return true;      
 }
 
 void predictMaintenance(EngineData data) 
@@ -300,7 +300,9 @@ int main()
             cout << "1. Check Air Quality" << endl;
             cout << "2. Engine Monitoring System" << endl;
             cout << "3. Sector Information" << endl;   
-            cout << "4. Distance between two Sectors"<<endl;
+            cout << "4.Show Mine Map" <<endl;
+            cout << "5. Distance between two Sectors"<<endl;
+
             cin >> choice;
 
              if (choice == 1)
@@ -363,10 +365,34 @@ int main()
                 }
             }
             else if (choice == 4)
+                    {
+                        const char* mineMap = R"(
+                    ====================== SAFE STRIKE : BASE MINE MAP ======================
+
+                                                [ Sector N1 ]                     
+                                                    |                         
+                                                    |                              
+                      [ Sector NW ] -------- [ Sector C ] -------- [ Sector NE ]
+                                                    |                              
+                                                    |                              
+                      [ Sector W1 ] -------- [ Sector M ] -------- [ Sector E1 ]
+                                                    |                              
+                                                    |                              
+                      [ Sector SW ] -------- [ Alt Route S ] ------ [ Sector SE ]
+                                                    |                              
+                                                    |                              
+                                             [ Loading Bay ]
+                                              
+                    =======================================================================
+                    )";
+                        cout << mineMap << endl;
+                    }
+
+            else if (choice == 5)
             {
 
                 cin.ignore(1000, '\n');
-                
+
                 cout << "Enter your First Sector: ";
                 getline(cin, s1.name); 
                 assignCoordinates(s1); 
