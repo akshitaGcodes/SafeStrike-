@@ -460,6 +460,12 @@ int main()
     Sector s2;
 
     string user_name, password;
+
+    cout <<b_white << "====================================\n"<<reset;
+    cout << b_green  <<" SAFE STRIKE "<<reset<<b_blue<<"| Mine Safety System\n"<<reset;
+    cout << b_blue <<" Hackathon Prototype : "<<reset<<b_green<<"Error 404 \n" << reset;
+    cout << b_white << "====================================\n"<<reset<<endl<<endl;
+
     cout << b_white << "----------------Welcome to SafeStrike----------------" << reset << endl;
     cout << "Please enter your login credentials." << endl;
     cout << "UserName : ";
