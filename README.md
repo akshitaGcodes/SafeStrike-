@@ -1,5 +1,4 @@
-# SafeStrike-
-Innovate Hackthon : SafeStrike                                                     
+# SafeStrike-                                                
 
 Our moto : We don’t just find the minerals we protect the people who find them 
 
